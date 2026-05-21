@@ -8,6 +8,31 @@
       name="description"
       content="Litenova Solutions builds cost-effective, scalable, and efficient software systems powered by AI-driven development and excellent architecture."
     />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Litenova Solutions" />
+    <link rel="canonical" href="https://litenova.solutions/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://litenova.solutions/" />
+    <meta property="og:site_name" content="Litenova Solutions" />
+    <meta property="og:title" content="Litenova Solutions - AI-Driven Software Development" />
+    <meta property="og:description" content="Litenova Solutions builds cost-effective, scalable, and efficient software systems powered by AI-driven development and excellent architecture." />
+    <meta property="og:image" content="https://litenova.solutions/logo.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Litenova Solutions - AI-Driven Software Development" />
+    <meta name="twitter:description" content="Litenova Solutions builds cost-effective, scalable, and efficient software systems powered by AI-driven development and excellent architecture." />
+    <meta name="twitter:image" content="https://litenova.solutions/logo.png" />
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -46,6 +71,35 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Litenova Solutions",
+      "url": "https://litenova.solutions",
+      "logo": "https://litenova.solutions/logo.png",
+      "description": "Litenova Solutions builds cost-effective, scalable, and efficient software systems powered by AI-driven development and excellent architecture.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Schiedamsedijk 58B",
+        "addressLocality": "Rotterdam",
+        "postalCode": "3011 EG",
+        "addressCountry": "NL"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@litenova.solutions",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/litenova/",
+        "https://github.com/Litenova-Solutions"
+      ]
+    }
+    </script>
     <style>
       /* Subtle dot-grid background, inspired by shadcn */
       .dot-grid {
@@ -99,25 +153,29 @@
           </a>
 
           <!-- Desktop Nav Links -->
-          <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
+          <div class="hidden md:flex items-center gap-8 text-sm text-gray-400" role="navigation" aria-label="Main navigation">
             <a
               href="#about"
               class="hover:text-litenova-gold transition-colors duration-200"
+              aria-label="Our Approach"
               >Approach</a
             >
             <a
               href="#ai"
               class="hover:text-litenova-gold transition-colors duration-200"
+              aria-label="AI-Driven Development"
               >AI Development</a
             >
             <a
               href="#standards"
               class="hover:text-litenova-gold transition-colors duration-200"
+              aria-label="Engineering Standards"
               >Standards</a
             >
             <a
               href="#projects"
               class="hover:text-litenova-gold transition-colors duration-200"
+              aria-label="Our Projects"
               >Projects</a
             >
           </div>
@@ -780,7 +838,7 @@
 
           <!-- Center: copyright -->
           <p class="text-xs text-gray-600 order-last md:order-none">
-            &copy; 2025 Litenova Solutions. All rights reserved.
+            &copy; 2026 Litenova Solutions. All rights reserved.
           </p>
 
           <!-- Right: social links -->
