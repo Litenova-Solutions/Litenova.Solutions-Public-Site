@@ -24,6 +24,7 @@ Litenova Solutions designs and ships **cost-effective, distributed, and scalable
 |---|---|---|
 | [Entro.to](https://entro.to) | Cost-effective, high-throughput event ticketing platform | In Development |
 | [LiteBus](https://github.com/litenova/LiteBus) | Lightweight in-process mediator for CQS in .NET | Open Source |
+| [LitePress](https://github.com/Litenova-Solutions/LitePress) | Publishing platform built to our Engineering Standards | Open Source |
 
 ---
 
