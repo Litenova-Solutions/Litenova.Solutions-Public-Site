@@ -1,0 +1,3 @@
+[submodule "engineering-standards"]
+	path = engineering-standards
+	url = https://github.com/Litenova-Solutions/Engineering-Standards

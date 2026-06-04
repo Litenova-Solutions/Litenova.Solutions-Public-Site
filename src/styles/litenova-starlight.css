@@ -1,0 +1,270 @@
+/* Litenova Engineering Standards — Starlight theme (dark only) */
+
+:root,
+:root[data-theme='dark'],
+[data-theme='dark'] {
+  --litenova-dark: #0a0a0a;
+  --litenova-surface: #111111;
+  --litenova-border: #1f1f1f;
+  --litenova-gold: #ffce63;
+  --litenova-gold-dim: rgba(255, 206, 99, 0.12);
+  --litenova-gold-hover: rgba(255, 206, 99, 0.2);
+  --litenova-text: #f3f4f6;
+  --litenova-text-secondary: #9ca3af;
+  --litenova-text-muted: #6b7280;
+
+  --sl-color-white: var(--litenova-text);
+  --sl-color-gray-1: var(--litenova-text);
+  --sl-color-gray-2: var(--litenova-text-secondary);
+  --sl-color-gray-3: var(--litenova-text-muted);
+  --sl-color-gray-4: var(--litenova-border);
+  --sl-color-gray-5: var(--litenova-surface);
+  --sl-color-gray-6: var(--litenova-dark);
+  --sl-color-black: var(--litenova-dark);
+
+  --sl-color-accent-low: var(--litenova-gold-dim);
+  --sl-color-accent: var(--litenova-gold);
+  --sl-color-accent-high: #ffe08a;
+
+  --sl-color-bg: var(--litenova-dark);
+  --sl-color-bg-nav: rgba(10, 10, 10, 0.85);
+  --sl-color-bg-sidebar: var(--litenova-surface);
+  --sl-color-bg-inline-code: var(--litenova-gold-dim);
+  --sl-color-hairline-light: var(--litenova-border);
+  --sl-color-hairline: var(--litenova-border);
+  --sl-color-hairline-shade: var(--litenova-border);
+
+  --sl-color-text: var(--litenova-text);
+  --sl-color-text-accent: var(--litenova-gold);
+  --sl-color-text-invert: var(--litenova-dark);
+
+  --sl-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--litenova-dark);
+  color: var(--litenova-text);
+}
+
+/* Hide theme toggle slot */
+starlight-theme-select,
+.theme-select,
+button[aria-label*='theme' i],
+button[title*='theme' i] {
+  display: none !important;
+}
+
+/* Header */
+header.header {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--sl-color-bg-nav) !important;
+  border-bottom: 1px solid var(--litenova-border);
+  box-shadow: 0 1px 0 rgba(255, 206, 99, 0.08);
+}
+
+header.header a:hover {
+  color: var(--litenova-gold);
+}
+
+/* Search: use full width of header center column */
+@media (min-width: 50rem) {
+  header.header > .sl-flex:has(button[data-open-modal]) {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  header.header site-search button[data-open-modal],
+  header.header button[data-open-modal] {
+    max-width: none !important;
+    width: 100% !important;
+  }
+}
+
+/* Splash home: readable intro column */
+.sl-markdown-content.hero + .content-panel .sl-markdown-content,
+main:has(.hero) .content-panel .sl-markdown-content {
+  max-width: 48rem;
+  margin-inline: auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+main:has(.hero) .content-panel .sl-markdown-content h2 {
+  border-top: none;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+main:has(.hero) .content-panel .sl-markdown-content h2::after {
+  display: none;
+}
+
+main:has(.hero) .content-panel .sl-markdown-content table {
+  width: 100%;
+  margin: 1.25rem 0 2rem;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--litenova-surface) !important;
+  border-inline-end-color: var(--litenova-border) !important;
+}
+
+.sidebar a[aria-current='page'],
+.sidebar a[data-current='true'] {
+  color: var(--litenova-gold) !important;
+  background-color: var(--litenova-gold-dim) !important;
+}
+
+.sidebar summary,
+.sidebar a {
+  color: var(--litenova-text-secondary);
+}
+
+.sidebar a:hover {
+  color: var(--litenova-gold);
+  background-color: var(--litenova-gold-dim);
+}
+
+/* Main content dot grid */
+main .content-panel,
+main > .sl-container,
+.sl-markdown-content {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 206, 99, 0.06) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+}
+
+/* Headings */
+.sl-markdown-content h2 {
+  border-top: 1px solid var(--litenova-border);
+  padding-top: 1.5rem;
+  margin-top: 2.5rem;
+  position: relative;
+}
+
+.sl-markdown-content h2::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--litenova-gold);
+  margin-top: 0.5rem;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  color: var(--litenova-text);
+}
+
+.sl-markdown-content a {
+  color: var(--litenova-gold);
+}
+
+.sl-markdown-content a:hover {
+  color: #ffe08a;
+}
+
+/* Code */
+.expressive-code,
+pre,
+code {
+  --ec-brdCol: var(--litenova-border);
+}
+
+pre,
+.expressive-code figure {
+  background-color: var(--litenova-surface) !important;
+  border: 1px solid var(--litenova-border) !important;
+  border-radius: 0.5rem;
+}
+
+:not(pre) > code,
+.sl-markdown-content :not(pre) > code {
+  background-color: var(--litenova-gold-dim) !important;
+  color: var(--litenova-gold) !important;
+  border: 1px solid rgba(255, 206, 99, 0.2);
+  padding: 0.15em 0.35em;
+  border-radius: 0.25rem;
+}
+
+/* Tables */
+.sl-markdown-content table {
+  border-color: var(--litenova-border);
+}
+
+.sl-markdown-content thead th {
+  background-color: var(--litenova-gold-dim);
+  color: var(--litenova-gold);
+  border-color: var(--litenova-border);
+}
+
+.sl-markdown-content tbody tr:nth-child(even) {
+  background-color: rgba(17, 17, 17, 0.6);
+}
+
+/* Search modal */
+site-search dialog,
+#starlight__search {
+  background-color: var(--litenova-surface);
+  border-color: var(--litenova-border);
+  color: var(--litenova-text);
+}
+
+/* Footer */
+footer.footer {
+  background-color: var(--litenova-surface) !important;
+  border-top: 1px solid var(--litenova-border) !important;
+  color: var(--litenova-text-muted);
+}
+
+footer.footer a {
+  color: var(--litenova-gold);
+}
+
+/* Splash hero */
+.hero {
+  --sl-color-white: var(--litenova-text);
+}
+
+.hero .action.primary {
+  background-color: var(--litenova-gold) !important;
+  color: var(--litenova-dark) !important;
+  border-color: var(--litenova-gold) !important;
+}
+
+.hero .action.primary:hover {
+  background-color: #ffe08a !important;
+}
+
+.hero .action.minimal {
+  color: var(--litenova-text-secondary) !important;
+  border-color: var(--litenova-border) !important;
+}
+
+.hero .action.minimal:hover {
+  color: var(--litenova-gold) !important;
+  border-color: rgba(255, 206, 99, 0.3) !important;
+  background-color: var(--litenova-gold-dim) !important;
+}
+
+/* Aside / admonitions */
+.starlight-aside {
+  border-color: var(--litenova-border);
+}
+
+.starlight-aside--tip {
+  border-color: rgba(255, 206, 99, 0.35);
+  background-color: var(--litenova-gold-dim);
+}
