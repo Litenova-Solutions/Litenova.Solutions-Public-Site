@@ -1,10 +1,15 @@
-# Litenova Solutions - Public Site
+# Litenova Solutions — Public Site
 
 [![Live Site](https://img.shields.io/badge/Live-litenova.solutions-gold?style=flat-square)](https://litenova.solutions)
 [![Engineering Standards](https://img.shields.io/badge/Standards-/Standards/-gold?style=flat-square)](https://litenova.solutions/Standards/)
 [![License](https://img.shields.io/github/license/Litenova-Solutions/Litenova.Solutions-Public-Site?style=flat-square)](LICENSE)
 
-The public marketing site for **[Litenova Solutions](https://litenova.solutions)** and a read-only **Engineering Standards** documentation site at [`/Standards/`](https://litenova.solutions/Standards/). Both deploy together to GitHub Pages from this repository.
+Unified **Next.js** application deployed on **Vercel** at [litenova.solutions](https://litenova.solutions):
+
+- **Marketing** at `/`
+- **Engineering Standards** documentation at `/Standards/`
+
+Standards content is authored in the [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) submodule and staged into this app at build time.
 
 ---
 
@@ -12,17 +17,16 @@ The public marketing site for **[Litenova Solutions](https://litenova.solutions)
 
 | Path | Role |
 |------|------|
-| `index.html` | Marketing landing page (static HTML + Tailwind CDN) |
-| `engineering-standards/` | Git submodule → [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) (do not edit here) |
-| `standards-overrides/` | Site-owned pages (splash home, 404) |
-| `scripts/stage-standards-docs.mjs` | Stage submodule `docs/` → `.standards-src` + transforms |
-| `scripts/sidebar-from-docs.mjs` | Build sidebar link trees from staged markdown |
-| `astro.config.mjs`, `src/` | Astro 6 + Starlight (theme, loader, sidebar) |
-| `public/` | `logo.png`, `favicon.ico` for `/Standards/` |
-| `standards-site/README.md` | Standards-site maintainer notes |
-| `Standards/` | Build output (gitignored) served at `/Standards/` |
-
-Standards **content** is authored in the Engineering-Standards repo. This repo pins that repo as a submodule and publishes a web-friendly copy. Update the submodule pointer here when you want new standards on the live site.
+| `app/` | Next.js App Router (marketing + standards routes) |
+| `components/marketing/` | Marketing landing page sections |
+| `components/standards/` | Standards splash + docs chrome |
+| `engineering-standards/` | Git submodule (do not edit directly) |
+| `standards-overrides/` | Site-owned standards pages + `meta.json` sidebar |
+| `standards-splash/` | Generated splash body (`body.md` from staging) |
+| `scripts/stage-standards-docs.mjs` | Stage submodule → `.standards-src` |
+| `lib/source.ts` | Fumadocs content loader |
+| `public/` | Static assets (logo, favicon) |
+| `docs/MAINTAINER.md` | Maintainer notes |
 
 ---
 
@@ -32,130 +36,124 @@ Standards **content** is authored in the Engineering-Standards repo. This repo p
 push to main
     │
     ▼
-.github/workflows/deploy-pages.yml
+Vercel (Git integration, submodules enabled)
     │
-    ├─ checkout (submodules: recursive)
-    ├─ pnpm install --frozen-lockfile
-    ├─ pnpm docs:build
+    ├─ pnpm install
+    ├─ pnpm build
     │     ├─ stage → .standards-src
-    │     └─ astro build → Standards/
+    │     └─ next build
     │
-    └─ upload repository root (marketing + Standards/)
-            ▼
-    litenova.solutions/          → index.html
-    litenova.solutions/Standards/ → Starlight static site
+    └─ litenova.solutions/
+           ├─ /           → marketing
+           └─ /Standards/ → Fumadocs docs
 ```
 
-GitHub Pages must use the **GitHub Actions** source. The custom domain is set via `CNAME`.
+### Vercel settings
+
+| Setting | Value |
+|---------|-------|
+| Root Directory | `.` |
+| Framework Preset | Next.js |
+| Node.js Version | 22 |
+| Include Git Submodules | **ON** |
+| Production Branch | `main` |
+| Custom Domain | `litenova.solutions` |
+
+After connecting Vercel, update DNS per Vercel instructions and disable GitHub Pages on this repository.
 
 ---
 
-## Engineering Standards (local)
-
-**Requirements:** Node 22+, [pnpm](https://pnpm.io/) 10.
+## Local development
 
 ```bash
 git clone --recurse-submodules git@github.com:Litenova-Solutions/Litenova.Solutions-Public-Site.git
 cd Litenova.Solutions-Public-Site
-
-# If you cloned without submodules:
-git submodule update --init --recursive
-
+git submodule update --init --recursive   # if needed
 pnpm install
-pnpm docs:dev
+pnpm dev
 ```
 
-Open **http://localhost:4321/Standards/** (Astro `base` is `/Standards`).
+Open:
 
-| Command | Purpose |
-|---------|---------|
-| `pnpm docs:stage` | Refresh `.standards-src` from submodule + overrides |
-| `pnpm docs:dev` | Stage + dev server |
-| `pnpm docs:build` | Stage + production build → `Standards/` |
-| `pnpm docs:preview` | Stage + preview the production build |
-
-### Staging transforms
-
-`pnpm docs:stage` copies the full `engineering-standards/docs` tree (including templates and agent-oriented guides), overlays `standards-overrides/`, then:
-
-- Adds Starlight `title` frontmatter and removes duplicate `#` headings
-- Collapses consecutive `---` horizontal rules
-- Rewrites relative `.md` links to site routes
-
-Docs are loaded from `.standards-src` via a glob content loader (not `src/content/docs`). Sidebar sections for blueprints, templates, decisions, and runbooks are generated from that folder in `scripts/sidebar-from-docs.mjs` because Starlight `autogenerate` only indexes `src/content/docs`.
-
-Further detail: [standards-site/README.md](standards-site/README.md).
-
-### Local testing
-
-1. **Standards (primary)** — `pnpm docs:dev` → home, `/guides/onboarding/`, `/conventions/principles/`, search, sidebar.
-2. **Production-like** — `pnpm docs:build` && `pnpm docs:preview`.
-3. **Marketing only** — `npx serve .` → http://localhost:3000/ (links to `/Standards/` need a built `Standards/` folder or a second server).
-4. **Full static mirror** — `pnpm docs:build` then `npx serve .` → http://localhost:3000/Standards/.
+- Marketing: http://localhost:3000/
+- Standards home: http://localhost:3000/Standards/
+- Sample doc: http://localhost:3000/Standards/guides/onboarding
+- Search: Ctrl+K on any standards page
 
 ---
 
-## Marketing site (local)
+## Commands
 
-No build step:
+| Command | Purpose |
+|---------|---------|
+| `pnpm stage` | Refresh `.standards-src` from submodule + overrides |
+| `pnpm dev` | Stage + dev server |
+| `pnpm build` | Stage + production build |
+| `pnpm start` | Run production server locally |
+| `pnpm lint` | Next.js lint |
 
-```bash
-npx serve .
-```
+---
+
+## Staging transforms
+
+`pnpm stage` runs `scripts/stage-standards-docs.mjs`, which:
+
+1. Copies `engineering-standards/docs/` into `.standards-src/`
+2. Overlays `standards-overrides/`
+3. Injects `title` frontmatter from H1 when missing
+4. Removes duplicate H1 after frontmatter
+5. Collapses repeated horizontal rules
+6. Rewrites internal links to `/Standards/...` paths
+7. Moves splash `index.md` to `standards-splash/body.md`
+8. Renames root `README.md` to `doc-map.md`
 
 ---
 
 ## Updating standards content
 
-1. Change docs in [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) and merge to `main`.
-2. In this repo: `git submodule update --remote engineering-standards` (or pin a tag/commit), commit the submodule gitlink.
-3. Push to `main`; CI rebuilds and deploys.
+1. Edit and merge in [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards).
+2. Update the submodule pointer in this repo.
+3. Push to `main`; Vercel redeploys.
 
-Do not commit `Standards/`, `.standards-src/`, `node_modules/`, or `.astro/`.
-
----
-
-## About Litenova Solutions
-
-Litenova Solutions designs and ships **cost-effective, distributed, and scalable software systems** with AI integrated across the development lifecycle:
-
-- **AI-augmented engineering** — Agents in design, implementation, review, and testing.
-- **Distributed systems** — High-throughput, fault-tolerant architectures.
-- **Open source** — [LiteBus](https://github.com/litenova/LiteBus), [LitePress](https://github.com/Litenova-Solutions/LitePress).
-- **Transparent standards** — [/Standards/](https://litenova.solutions/Standards/) and [Engineering-Standards on GitHub](https://github.com/Litenova-Solutions/Engineering-Standards).
-
----
-
-## Projects
-
-| Project | Description | Status |
-|---------|-------------|--------|
-| [Entro.to](https://entro.to) | Cost-effective, high-throughput event ticketing platform | In Development |
-| [LiteBus](https://github.com/litenova/LiteBus) | Lightweight in-process mediator for CQS in .NET | Open Source |
-| [LitePress](https://github.com/Litenova-Solutions/LitePress) | Publishing platform built to our Engineering Standards | Open Source |
+See [docs/MAINTAINER.md](docs/MAINTAINER.md) for sidebar and splash editing.
 
 ---
 
 ## Tech stack
 
 | Layer | Stack |
-|-------|--------|
-| Marketing | HTML5, Tailwind CSS (CDN), Font Awesome, JSON-LD |
-| Standards | Astro 6, Starlight, `starlight-base-path`, Pagefind |
-| CI | pnpm 10, Node 22, GitHub Actions → Pages |
-| Hosting | GitHub Pages, `litenova.solutions` |
+|-------|-------|
+| Framework | Next.js 16 (App Router) |
+| Docs | Fumadocs UI + Fumadocs MDX |
+| Search | Orama (server route) |
+| Styling | Tailwind CSS v4 |
+| CI | GitHub Actions build check |
+| Hosting | Vercel, `litenova.solutions` |
 
 ---
 
-## Contact
+## Open source
 
-- **Email:** info@litenova.solutions
-- **LinkedIn:** [linkedin.com/company/litenova](https://www.linkedin.com/company/litenova/)
-- **GitHub:** [github.com/Litenova-Solutions](https://github.com/Litenova-Solutions)
-- **KVK:** 95043497
+This repository is open source under the [MIT License](LICENSE).
+
+| What | Where | License |
+|------|-------|---------|
+| Website + standards site code (this repo) | This repository | MIT |
+| Engineering standards markdown content | [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) submodule | See that repository |
+
+- **Site changes** (layout, theme, marketing copy, staging scripts): open a PR here.
+- **Standards content** (conventions, guides, ADRs): open a PR in [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards), then update the submodule pointer here.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details. Trademark use is covered in [TRADEMARK.md](TRADEMARK.md).
 
 ---
 
-## License
+## Security
 
-[MIT](LICENSE) © 2026 Litenova Solutions
+To report a security vulnerability, see [SECURITY.md](SECURITY.md). Please do not open public issues for security reports.
+
+---
+
+## Maintainer notes
+
+See [docs/MAINTAINER.md](docs/MAINTAINER.md) for content flow, sidebar editing, and Vercel configuration.

@@ -285,11 +285,17 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
-# Astro / Starlight standards site
+# Astro / Starlight standards site (legacy — removed)
 .standards-src/
-Standards/
-.astro/
-dist/
+.source/
+standards-splash/body.md
+.next/
+out/
+
+# Environment
+.env
+.env.*
+!.env.example
 
 # Visual Studio 6 build log
 *.plg

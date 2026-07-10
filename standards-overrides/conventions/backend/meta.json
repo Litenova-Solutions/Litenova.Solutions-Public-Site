@@ -1,0 +1,28 @@
+{
+  "title": "Backend",
+  "defaultOpen": false,
+  "pages": [
+    "solution-structure",
+    "domain-layer",
+    "application-layer",
+    "infrastructure-layer",
+    "api-layer",
+    "exception-hierarchy",
+    "query-read-strategy",
+    "testing",
+    "api-acceptance-tests",
+    "external-dependencies",
+    "authentication-and-authorization",
+    "object-authorization",
+    "observability",
+    "reliability",
+    "background-jobs",
+    "caching",
+    "concurrency",
+    "soft-delete",
+    "raw-sql-and-reporting",
+    "options-and-configuration",
+    "worker-projects",
+    "deployment-and-migrations"
+  ]
+}

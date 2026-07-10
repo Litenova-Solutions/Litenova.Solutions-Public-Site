@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a problem with the public site or standards documentation shell
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. For **standards content** issues (conventions, guides, ADRs), use the [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) repository instead.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected instead.
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Page where you saw the issue (e.g. https://litenova.solutions/Standards/guides/onboarding)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this locally or on the live site?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Marketing site (/)
+        - Standards splash (/Standards/)
+        - Standards docs (/Standards/...)
+        - Search
+        - Build / CI
+        - Other
+    validations:
+      required: true

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Copy engineering-standards/docs into .standards-src, overlay standards-overrides,
- * and apply site transforms (titles, link paths, horizontal rule cleanup).
+ * and apply Fumadocs site transforms (titles, link paths, horizontal rule cleanup).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -13,6 +13,8 @@ const root = path.resolve(__dirname, '..');
 const SRC_DOCS = path.join(root, 'engineering-standards', 'docs');
 const STAGE_DIR = path.join(root, '.standards-src');
 const OVERRIDES_DIR = path.join(root, 'standards-overrides');
+
+const STANDARDS_PREFIX = '/Standards';
 
 /** Files to omit from the public site (empty = ship full docs tree including templates). */
 const EXCLUDE_REL = new Set();
@@ -75,9 +77,12 @@ function applyCompatFixes() {
 
 function toSiteSlug(filePath) {
   let slug = filePath.replace(/\\/g, '/').replace(/\.mdx?$/i, '');
-  if (slug.endsWith('/README')) slug = `${slug.slice(0, -7)}/readme`;
-  else if (slug === 'README') slug = 'readme';
-  return `/${slug}`;
+  if (slug.endsWith('/README') || slug.endsWith('/readme')) {
+    slug = slug.replace(/\/(README|readme)$/i, '');
+  } else if (/^(README|readme)$/i.test(slug)) {
+    slug = '';
+  }
+  return slug ? `${STANDARDS_PREFIX}/${slug}` : STANDARDS_PREFIX;
 }
 
 function resolveDocPath(href, currentRel) {
@@ -88,6 +93,10 @@ function resolveDocPath(href, currentRel) {
 
   let resolved = rawPath.replace(/\\/g, '/');
   const currentDir = path.posix.dirname(currentRel.replace(/\\/g, '/'));
+
+  if (resolved.startsWith('/Standards/')) {
+    return { external: false, href: `${resolved}${hash ? `#${hash}` : ''}` };
+  }
 
   if (resolved.startsWith('/')) {
     resolved = resolved.slice(1);
@@ -119,7 +128,6 @@ function rewriteMarkdownLinks(text, currentRel) {
   });
 }
 
-/** Collapse consecutive `---` thematic breaks (common after section edits). */
 function collapseHorizontalRules(text) {
   let out = text.replace(/\r\n/g, '\n');
   let prev;
@@ -139,6 +147,31 @@ function stripDuplicateH1(text) {
   const rest = text.slice(fmMatch[0].length);
   const stripped = rest.replace(/^\s*#\s+.+\r?\n(\s*\r?\n)?/, '');
   return fmMatch[0] + stripped;
+}
+
+function stripStarlightFrontmatter(text) {
+  const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n*/);
+  if (!fmMatch) return text;
+
+  const lines = fmMatch[1].split('\n');
+  const kept = [];
+  let skipBlock = false;
+
+  for (const line of lines) {
+    if (/^template:/.test(line) || /^editUrl:/.test(line)) continue;
+    if (/^hero:/.test(line)) {
+      skipBlock = true;
+      continue;
+    }
+    if (skipBlock) {
+      if (line.startsWith('  ') || line.startsWith('\t')) continue;
+      skipBlock = false;
+    }
+    kept.push(line);
+  }
+
+  const block = `---\n${kept.join('\n').trimEnd()}\n---\n\n`;
+  return block + text.slice(fmMatch[0].length);
 }
 
 function injectTitles(text) {
@@ -177,7 +210,38 @@ function processAllMarkdown(dir, rel = '') {
     if (!/\.mdx?$/i.test(name.name)) continue;
 
     const raw = fs.readFileSync(full, 'utf8');
-    fs.writeFileSync(full, transformMarkdown(relPath, raw), 'utf8');
+    let transformed = transformMarkdown(relPath, raw);
+    if (relPath === 'index.md') {
+      transformed = stripStarlightFrontmatter(transformed);
+    }
+    fs.writeFileSync(full, transformed, 'utf8');
+  }
+}
+
+function postProcessStagedFiles() {
+  const splashPath = path.join(STAGE_DIR, 'index.md');
+  const splashOutDir = path.join(root, 'standards-splash');
+  const splashOut = path.join(splashOutDir, 'body.md');
+
+  if (fs.existsSync(splashPath)) {
+    fs.mkdirSync(splashOutDir, { recursive: true });
+    fs.renameSync(splashPath, splashOut);
+  }
+
+  const stagedSplash = path.join(STAGE_DIR, '_splash-body.md');
+  if (fs.existsSync(stagedSplash)) {
+    fs.mkdirSync(splashOutDir, { recursive: true });
+    fs.renameSync(stagedSplash, splashOut);
+  }
+
+  const rootReadme = path.join(STAGE_DIR, 'README.md');
+  if (fs.existsSync(rootReadme)) {
+    fs.renameSync(rootReadme, path.join(STAGE_DIR, 'doc-map.md'));
+  }
+
+  const staged404 = path.join(STAGE_DIR, '404.md');
+  if (fs.existsSync(staged404)) {
+    fs.rmSync(staged404, { force: true });
   }
 }
 
@@ -194,5 +258,6 @@ copyDir(SRC_DOCS, STAGE_DIR);
 overlayDir(OVERRIDES_DIR, STAGE_DIR);
 applyCompatFixes();
 processAllMarkdown(STAGE_DIR);
+postProcessStagedFiles();
 
 console.log(`Staged standards docs → ${path.relative(root, STAGE_DIR)}`);

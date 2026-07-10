@@ -1,21 +1,42 @@
 {
   "name": "litenova-solutions-public-site",
-  "private": true,
+  "description": "Public marketing site and Engineering Standards documentation for Litenova Solutions — Next.js, Fumadocs, Vercel.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://litenova.solutions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/issues"
+  },
+  "author": "Litenova Solutions <info@litenova.solutions>",
+  "private": false,
   "type": "module",
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "docs:stage": "node scripts/stage-standards-docs.mjs",
-    "docs:dev": "node scripts/stage-standards-docs.mjs && astro dev",
-    "docs:build": "node scripts/stage-standards-docs.mjs && astro build",
-    "docs:preview": "node scripts/stage-standards-docs.mjs && astro preview"
+    "stage": "node scripts/stage-standards-docs.mjs",
+    "dev": "pnpm stage && next dev",
+    "build": "pnpm stage && next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.39.3",
-    "astro": "^6.4.4",
-    "sharp": "^0.34.3",
-    "starlight-base-path": "^0.1.1"
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "fumadocs-core": "^16.0.7",
+    "fumadocs-mdx": "^14.2.5",
+    "fumadocs-ui": "^16.0.7",
+    "next": "^16.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "tailwindcss": "^4.1.13",
     "typescript": "^5.8.3"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "title": "Frontend",
+  "defaultOpen": false,
+  "pages": [
+    "nextjs-app-router",
+    "components",
+    "data-fetching",
+    "state-and-forms",
+    "state-management",
+    "testing",
+    "feature-boundaries",
+    "error-handling-and-problem-details",
+    "environment-and-runtime-config",
+    "internationalization",
+    "admin-api-auth"
+  ]
+}
