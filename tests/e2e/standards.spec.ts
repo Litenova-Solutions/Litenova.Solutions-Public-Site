@@ -29,9 +29,12 @@ test('a standards document renders its title, edit link, and v1 content', async 
   );
 });
 
-test('static standards search finds and opens a v1 topic', async ({ page }) => {
+test('static standards search finds and opens a v1 topic', async ({ isMobile, page }) => {
   await page.goto('/Standards');
-  await page.getByRole('button', { name: /search/i }).first().click();
+  const searchTrigger = isMobile
+    ? page.locator('button[data-search]:visible').first()
+    : page.getByRole('button', { name: /^Search/ });
+  await searchTrigger.click();
 
   const dialog = page.getByRole('dialog', { name: 'Search' });
   await expect(dialog).toBeVisible();
