@@ -2,9 +2,9 @@ export const siteConfig = {
   name: 'Litenova Solutions',
   legalName: 'Litenova Solutions',
   url: 'https://www.litenova.solutions',
-  title: 'Litenova Solutions | Distributed .NET Systems',
+  title: 'Litenova Solutions | Software Systems and Engineering Tools',
   description:
-    'Litenova Solutions is an independent software studio in Rotterdam. We design distributed .NET systems, review codebases, and maintain open-source engineering tools.',
+    'Litenova Solutions develops software for distributed and edge environments. The company also maintains tools and standards for AI-assisted software engineering.',
   email: 'info@litenova.solutions',
   phone: {
     display: '+31 6 42 53 52 14',

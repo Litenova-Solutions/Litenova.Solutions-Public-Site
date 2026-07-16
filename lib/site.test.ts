@@ -31,4 +31,27 @@ describe('site configuration', () => {
       }
     }
   });
+
+  it('publishes verified software license labels', () => {
+    expect(
+      projects.map(({ name, category, license }) => ({
+        name,
+        category,
+        license,
+      })),
+    ).toEqual([
+      {
+        name: 'Entro.to',
+        category: 'Commercial Product',
+        license: undefined,
+      },
+      { name: 'Fuse', category: 'Open Source', license: 'Apache-2.0' },
+      { name: 'LiteBus', category: 'Open Source', license: 'MIT' },
+      {
+        name: 'LitePress',
+        category: 'Source Available',
+        license: 'PolyForm Noncommercial 1.0.0',
+      },
+    ]);
+  });
 });

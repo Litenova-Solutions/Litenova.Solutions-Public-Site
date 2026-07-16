@@ -18,6 +18,10 @@ test.describe('visual review artifacts', () => {
     ]) {
       await page.goto(pageCase.path);
       await expect(page.locator('h1')).toBeVisible();
+      const animatedContent = page.locator('.animate-fade-in');
+      if ((await animatedContent.count()) > 0) {
+        await expect(animatedContent.first()).toHaveCSS('opacity', '1');
+      }
       await page.screenshot({
         path: path.join(screenshotDirectory, `${pageCase.name}.png`),
         fullPage: true,
@@ -27,6 +31,10 @@ test.describe('visual review artifacts', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('.animate-fade-in').first()).toHaveCSS(
+      'opacity',
+      '1',
+    );
     await page.screenshot({
       path: path.join(screenshotDirectory, 'home-mobile.png'),
       fullPage: true,

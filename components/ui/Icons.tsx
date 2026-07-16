@@ -31,6 +31,43 @@ export function BookIcon(props: IconProps) {
   );
 }
 
+export function CodeIcon(props: IconProps) {
+  return (
+    <svg {...sharedProps} {...props}>
+      <path d="m8 9-4 3 4 3" />
+      <path d="m16 9 4 3-4 3" />
+      <path d="m14 5-4 14" />
+    </svg>
+  );
+}
+
+export function ConsultationIcon(props: IconProps) {
+  return (
+    <svg {...sharedProps} {...props}>
+      <circle cx="9" cy="9" r="4" />
+      <path d="M3 21a6 6 0 0 1 12 0" />
+      <path d="M16 8h5" />
+      <path d="M18.5 5.5v5" />
+      <path d="M17 15h4" />
+    </svg>
+  );
+}
+
+export function EngineeringGraphIcon(props: IconProps) {
+  return (
+    <svg {...sharedProps} {...props}>
+      <circle cx="5" cy="12" r="2" />
+      <circle cx="12" cy="5" r="2" />
+      <circle cx="19" cy="12" r="2" />
+      <circle cx="12" cy="19" r="2" />
+      <path d="m6.5 10.5 4-4" />
+      <path d="m13.5 6.5 4 4" />
+      <path d="m17.5 13.5-4 4" />
+      <path d="m10.5 17.5-4-4" />
+    </svg>
+  );
+}
+
 export function CloseIcon(props: IconProps) {
   return (
     <svg {...sharedProps} {...props}>
@@ -65,6 +102,25 @@ export function MenuIcon(props: IconProps) {
       <path d="M4 6h16" />
       <path d="M4 12h16" />
       <path d="M4 18h16" />
+    </svg>
+  );
+}
+
+export function ProductIcon(props: IconProps) {
+  return (
+    <svg {...sharedProps} {...props}>
+      <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z" />
+      <path d="m4.5 7.8 7.5 4.3 7.5-4.3" />
+      <path d="M12 12v9" />
+    </svg>
+  );
+}
+
+export function StewardshipIcon(props: IconProps) {
+  return (
+    <svg {...sharedProps} {...props}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+      <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }

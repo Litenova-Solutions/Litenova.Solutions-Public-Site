@@ -9,7 +9,7 @@ import { CloseIcon, MenuIcon } from '@/components/ui/Icons';
 const navigation = [
   { href: '/#services', label: 'Services' },
   { href: '/Standards', label: 'Engineering Standards' },
-  { href: '/#projects', label: 'Open Source' },
+  { href: '/#products', label: 'Products' },
   { href: '/#contact', label: 'Contact' },
 ] as const;
 

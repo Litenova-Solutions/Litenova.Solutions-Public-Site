@@ -19,17 +19,17 @@ export function Hero() {
             className="mx-auto mb-8 h-auto w-40 drop-shadow-[0_18px_45px_rgba(255,206,99,0.12)] sm:w-48"
             priority
           />
-          <p className="eyebrow">Independent Software Studio in Rotterdam</p>
+          <p className="eyebrow">Independent Software Company in Rotterdam</p>
           <h1
             id="home-title"
             className="mx-auto mt-5 max-w-3xl text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
-            Software Engineering for Distributed .NET Systems
+            Software Systems and Engineering Tools
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-gray-300">
-            Litenova Solutions designs and implements distributed .NET systems,
-            reviews existing codebases, and maintains open-source engineering
-            tools.
+            Litenova Solutions develops software for distributed and edge
+            environments. The company also maintains tools and standards for
+            AI-assisted software engineering.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/Standards" className="button button-secondary">

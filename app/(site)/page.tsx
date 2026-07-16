@@ -1,14 +1,15 @@
 import { ContactSection } from '@/components/marketing/ContactSection';
 import { Hero } from '@/components/marketing/Hero';
-import { ProjectsSection } from '@/components/marketing/ProjectsSection';
+import { ProductsSection } from '@/components/marketing/ProjectsSection';
 import { ServicesSection } from '@/components/marketing/ServicesSection';
 import { StandardsSection } from '@/components/marketing/StandardsSection';
 import { JsonLd } from '@/components/JsonLd';
 import { createPageMetadata } from '@/lib/metadata';
+import { projects } from '@/lib/projects';
 import { absoluteUrl, siteConfig } from '@/lib/site';
 
 export const metadata = createPageMetadata({
-  title: 'Software Engineering for Distributed .NET Systems',
+  title: 'Software Systems and Engineering Tools',
   description: siteConfig.description,
   path: '/',
 });
@@ -64,10 +65,34 @@ export default function HomePage() {
               url: absoluteUrl('/#services'),
               provider: { '@id': absoluteUrl('/#organization') },
               serviceType: [
-                'Distributed systems engineering',
-                'Software architecture review',
-                'AI-assisted delivery enablement',
+                'Software products',
+                'Custom software development',
+                'Architecture and codebase consulting',
+                'AI-assisted engineering',
+                'Technical stewardship',
               ],
+            },
+            {
+              '@type': 'ItemList',
+              '@id': absoluteUrl('/#products'),
+              name: 'Products',
+              url: absoluteUrl('/#products'),
+              numberOfItems: projects.length,
+              itemListElement: projects.map((project, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                item: {
+                  '@type': 'SoftwareApplication',
+                  name: project.name,
+                  description: project.description,
+                  url: project.website ?? project.repository,
+                  codeRepository: project.repository,
+                  applicationCategory:
+                    project.category === 'Commercial Product'
+                      ? 'BusinessApplication'
+                      : 'DeveloperApplication',
+                },
+              })),
             },
           ],
         }}
@@ -76,7 +101,7 @@ export default function HomePage() {
         <Hero />
         <ServicesSection />
         <StandardsSection />
-        <ProjectsSection />
+        <ProductsSection />
         <ContactSection />
       </main>
     </>

@@ -2,6 +2,13 @@ import type { NextConfig } from 'next';
 import { createMDX } from 'fumadocs-mdx/next';
 
 const withMDX = createMDX();
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+const scriptSources = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isDevelopment ? ["'unsafe-eval'"] : []),
+].join(' ');
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -14,7 +21,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob:",
   "manifest-src 'self'",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src ${scriptSources}`,
   "style-src 'self' 'unsafe-inline'",
   'upgrade-insecure-requests',
 ].join('; ');
@@ -54,7 +61,7 @@ const config: NextConfig = {
       },
       {
         source: '/open-source',
-        destination: '/#projects',
+        destination: '/#products',
         permanent: true,
       },
       {

@@ -1,18 +1,41 @@
+import {
+  CodeIcon,
+  ConsultationIcon,
+  EngineeringGraphIcon,
+  ProductIcon,
+  StewardshipIcon,
+} from '@/components/ui/Icons';
+
 const services = [
   {
-    title: 'Distributed .NET Systems',
+    title: 'Software Products',
     description:
-      'Architecture and implementation for services that require explicit boundaries, reliable persistence, observable behavior, and controlled deployment.',
+      'Design, operation, and maintenance of software products developed under the Litenova name.',
+    icon: ProductIcon,
   },
   {
-    title: 'Architecture and Codebase Review',
+    title: 'Custom Software Development',
     description:
-      'Technical review of system boundaries, data access, failure handling, dependency structure, and delivery risks.',
+      'Design and implementation of applications, distributed services, integrations, and internal engineering tools.',
+    icon: CodeIcon,
+  },
+  {
+    title: 'Architecture and Codebase Consulting',
+    description:
+      'Technical assessment of system boundaries, persistence, failure handling, dependency structure, and migration constraints.',
+    icon: ConsultationIcon,
   },
   {
     title: 'AI-Assisted Engineering',
     description:
-      'Repository context, specifications, verification gates, and review practices for teams that use AI coding tools.',
+      'Repository context, specifications, verification gates, and review practices for teams using coding agents.',
+    icon: EngineeringGraphIcon,
+  },
+  {
+    title: 'Technical Stewardship',
+    description:
+      'Ongoing maintenance, dependency management, release engineering, and architecture support for existing systems.',
+    icon: StewardshipIcon,
   },
 ] as const;
 
@@ -25,24 +48,36 @@ export function ServicesSection() {
     >
       <div className="section-container">
         <div className="section-heading">
-          <h2 id="services-title">Engineering Services</h2>
+          <h2 id="services-title">Services</h2>
           <p>
-            Work is scoped around a defined system boundary, implementation
-            requirement, or codebase review.
+            Litenova develops its own products and provides engineering work for
+            defined systems and codebases.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {services.map((service) => (
-            <article key={service.title} className="card">
-              <h3 className="text-lg font-semibold text-gray-100">
-                {service.title}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-gray-400">
-                {service.description}
-              </p>
-            </article>
-          ))}
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+
+            return (
+              <article
+                key={service.title}
+                className={`card flex flex-col ${
+                  index < 3 ? 'lg:col-span-2' : 'lg:col-span-3'
+                } ${index === 4 ? 'md:col-span-2' : ''}`}
+              >
+                <div className="flex size-11 items-center justify-center rounded-lg border border-litenova-gold/20 bg-litenova-gold/8 text-litenova-gold">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="mt-5 text-lg font-semibold text-gray-100">
+                  {service.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-gray-400">
+                  {service.description}
+                </p>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
