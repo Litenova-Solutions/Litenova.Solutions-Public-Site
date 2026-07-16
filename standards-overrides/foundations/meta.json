@@ -1,0 +1,11 @@
+{
+  "title": "Foundations",
+  "defaultOpen": true,
+  "pages": [
+    "scope",
+    "principles",
+    "addd",
+    "agent-protocol",
+    "release-standard"
+  ]
+}

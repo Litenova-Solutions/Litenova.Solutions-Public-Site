@@ -285,12 +285,18 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
-# Astro / Starlight standards site (legacy — removed)
+# Generated Next.js and Fumadocs output
 .standards-src/
 .source/
 standards-splash/body.md
+public/llms.txt
+public/llms-full.txt
 .next/
 out/
+playwright-report/
+test-results/
+coverage/
+*.tsbuildinfo
 
 # Environment
 .env

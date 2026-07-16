@@ -1,50 +1,75 @@
 import Link from 'next/link';
+import { siteConfig } from '@/lib/site';
 
 export function Footer() {
   return (
-    <footer className="py-10 border-t border-litenova-border bg-litenova-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left">
-            <p className="text-sm font-semibold text-gray-200 mb-1">
-              Litenova Solutions
-            </p>
-            <p className="text-xs text-gray-500">
-              Schiedamsedijk 58B, 3011 EG Rotterdam, The Netherlands
-            </p>
-            <p className="text-xs text-gray-500">KVK Number: 95043497</p>
-          </div>
-
-          <p className="text-xs text-gray-600 order-last md:order-none">
-            &copy; 2026 Litenova Solutions. All rights reserved.
+    <footer className="border-t border-litenova-border bg-litenova-dark">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr] lg:px-8">
+        <div>
+          <p className="font-semibold text-gray-100">{siteConfig.name}</p>
+          <address className="mt-3 text-sm not-italic leading-6 text-gray-400">
+            {siteConfig.address.street}
+            <br />
+            {siteConfig.address.postalCode} {siteConfig.address.city},{' '}
+            {siteConfig.address.country}
+          </address>
+          <p className="mt-2 text-sm text-gray-400">
+            KVK {siteConfig.chamberOfCommerceNumber}
           </p>
+        </div>
 
-          <div className="flex items-center gap-5">
-            <a
-              href="https://www.linkedin.com/company/litenova/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-litenova-gold transition-colors duration-200"
-              aria-label="LinkedIn"
-            >
-              <i className="fab fa-linkedin text-xl"></i>
-            </a>
-            <a
-              href="https://github.com/Litenova-Solutions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-litenova-gold transition-colors duration-200"
-              aria-label="GitHub"
-            >
-              <i className="fab fa-github text-xl"></i>
-            </a>
-            <Link
-              href="/Standards/"
-              className="text-xs text-gray-500 hover:text-litenova-gold border border-litenova-border hover:border-litenova-gold/30 px-3 py-1.5 rounded-md transition-all duration-200 flex items-center gap-1.5"
-            >
-              <i className="fas fa-book text-xs"></i>
-              Eng Standards
+        <div>
+          <p className="text-sm font-semibold text-gray-100">Links</p>
+          <ul className="mt-4 space-y-3 text-sm">
+            <li>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-gray-400 hover:text-litenova-gold"
+              >
+                {siteConfig.email}
+              </a>
+            </li>
+            <li>
+              <Link
+                href="/Standards"
+                className="text-gray-400 hover:text-litenova-gold"
+              >
+                Engineering Standards
+              </Link>
+            </li>
+            <li>
+              <a
+                href={siteConfig.github}
+                className="text-gray-400 hover:text-litenova-gold"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a
+                href={siteConfig.linkedin}
+                className="text-gray-400 hover:text-litenova-gold"
+              >
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-litenova-border">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 text-xs text-gray-400 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+          <p>&copy; 2026 {siteConfig.legalName}. All rights reserved.</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="/privacy" className="hover:text-litenova-gold">
+              Privacy Notice
             </Link>
+            <Link href="/accessibility" className="hover:text-litenova-gold">
+              Accessibility
+            </Link>
+            <a href="/llms.txt" className="hover:text-litenova-gold">
+              LLM Index
+            </a>
           </div>
         </div>
       </div>

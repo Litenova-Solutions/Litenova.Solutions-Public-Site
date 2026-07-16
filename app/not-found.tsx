@@ -2,23 +2,27 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-litenova-dark px-4 text-center text-gray-100">
-      <h1 className="mb-2 text-4xl font-bold">404</h1>
-      <p className="mb-8 text-gray-400">Page not found.</p>
-      <div className="flex gap-3">
+    <main id="main-content" className="dot-grid flex min-h-screen flex-col items-center justify-center px-4 text-center text-gray-100">
+      <p className="eyebrow">404</p>
+      <h1 className="mt-5 text-4xl font-bold">Page Not Available</h1>
+      <p className="mt-4 max-w-lg text-gray-300">
+        The address may have changed during the standards migration. Use one of
+        the current entry points below.
+      </p>
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
           href="/"
-          className="rounded-md border border-litenova-border px-4 py-2 text-sm text-gray-300 hover:border-litenova-gold/30 hover:text-litenova-gold"
+          className="button button-secondary"
         >
-          Marketing home
+          Company Home
         </Link>
         <Link
           href="/Standards"
-          className="rounded-md bg-litenova-gold px-4 py-2 text-sm font-medium text-litenova-dark"
+          className="button button-primary"
         >
           Engineering Standards
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

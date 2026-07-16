@@ -1,0 +1,22 @@
+{
+  "title": "Extensions",
+  "defaultOpen": false,
+  "pages": [
+    "README",
+    "acceptance-bdd",
+    "api-compatibility",
+    "caching",
+    "concurrency-idempotency",
+    "data-lifecycle",
+    "deployment-containers",
+    "external-integrations",
+    "frontend-authjs",
+    "localization",
+    "multitenancy",
+    "outbox-worker",
+    "persistence-ef-core",
+    "realtime",
+    "reporting",
+    "scheduled-jobs"
+  ]
+}

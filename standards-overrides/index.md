@@ -1,45 +1,42 @@
 ---
-title: Engineering Standards
-description: Public engineering standards for Litenova Solutions — architecture, conventions, guides, and decisions for .NET and Next.js systems.
+title: Engineering Standards v1
+description: The released Litenova baseline for one bounded-context ASP.NET Core, PostgreSQL, Marten, and optional Next.js application.
 ---
 
-## Where you are
+## Pinned Engineering Baseline
 
-You are on the **public standards site** hosted at [litenova.solutions/Standards/](https://litenova.solutions/Standards/). It is a read-only mirror of our [Engineering Standards](https://github.com/Litenova-Solutions/Engineering-Standards) repository: the same markdown our teams use internally, formatted for the web.
+This site publishes **Engineering Standards v1.0.0**, the same Markdown release used by Litenova consumer repositories. Version 1 covers one bounded-context business application built with ASP.NET Core, PostgreSQL, Marten, and optional Next.js frontends.
 
-This is not the main [Litenova marketing site](/). Use the sidebar or search to move within the standards. The link at the top of the sidebar returns to [litenova.solutions](https://litenova.solutions).
+The release is pinned to the [v1.0.0 source tag](https://github.com/Litenova-Solutions/Engineering-Standards/tree/v1.0.0). Standards pages are read-only here. Proposed corrections belong in the [Engineering Standards repository](https://github.com/Litenova-Solutions/Engineering-Standards).
 
-## What to expect
+## Choose an Entry Point
 
-These documents are **normative** where they say MUST or MUST NOT: they describe how we structure solutions, write APIs, test, secure, and deploy. Some sections are written with AI-assisted workflows in mind; they are still useful for human readers and explain *why* rules exist, not only checklists.
+| Goal | Start Here |
+|:---|:---|
+| Adopt the release in a repository | [Adopt Standards v1](/Standards/guides/adopt-v1) |
+| Confirm that an application fits the supported scope | [Supported Scope](/Standards/foundations/scope) |
+| Review the complete selected stack | [.NET and Next.js Profile](/Standards/profile/dotnet-nextjs) |
+| Understand the delivery method | [Agentic Domain-Driven Delivery](/Standards/foundations/addd) |
+| Model a business capability | [Model a Domain Capability](/Standards/guides/model-domain) |
+| Find an exact convention | [Documentation Map](/Standards/doc-map) |
+| Select conditional behavior | [Extension Index](/Standards/extensions) |
+| Copy consumer documentation | [Consumer Templates](/Standards/templates) |
+| Review baseline decisions | [Decision Records](/Standards/reference/decisions) |
 
-| If you want to… | Start here |
-| :--- | :--- |
-| Join a project that uses these standards | [Onboarding](/Standards/guides/onboarding) |
-| See the full map of topics | [Documentation map](/Standards/doc-map) |
-| Understand architectural intent | [Philosophy](/Standards/philosophy) · [Clean architecture](/Standards/architecture/clean-architecture) |
-| Look up a term (ADDD, use case, tiers, etc.) | [Glossary](/Standards/glossary) |
-| Implement a feature end to end | [ADDD overview](/Standards/guides/agentic-domain-driven-design) · [Add a use case](/Standards/guides/add-new-use-case) |
-| Copy starter files (CI, Docker, domain docs) | [Templates](/Standards/templates) |
-| See full reference implementations | [Blueprints](/Standards/blueprints) |
-| Understand why we chose a technology or pattern | [Decisions (ADRs)](/Standards/decisions) |
-| Operate production systems | [Runbooks](/Standards/runbooks) |
+## How Each Topic Works
 
-## How the docs are organized
+Each convention and extension separates five concerns:
 
-- **Guides** — Narrative playbooks (onboarding, new projects, use case docs, definition of done).
-- **Conventions** — Layer rules (backend, frontend, shared) with examples; start from [Principles](/Standards/conventions/principles).
-- **Architecture** — Structural model (Clean Architecture, dependencies, CQRS placement).
-- **Blueprints** — Full-file reference code to copy, not fragments in convention text.
-- **Templates** — Scaffolds for consumer repos (domain docs, CI, config).
-- **Decisions** — Architecture decision records (context and rationale).
-- **Runbooks** — Operational procedures (deploy, incidents, migrations).
-- **Governance** — Exceptions and how standards evolve.
+- **Intent** explains why the topic exists.
+- **Agent Summary** provides narrow task context.
+- **Standards** define required boundaries with stable rule IDs.
+- **Conventions** provide replaceable defaults.
+- **Verification** names the evidence required for review.
 
-Many convention pages open with a short **Agent Quick Rules** section: a dense summary for tooling and experienced readers. The rest of each page is the full human-readable convention.
+Use the sidebar to browse by ownership area. Press `Ctrl+K` or `Command+K` to search the complete release without sending the query to a third-party service.
 
-## Search and navigation
+## Baseline and Extensions
 
-Use **Search** in the header (Ctrl+K) to find a topic across all pages. The sidebar groups the same content by area; nested sections can be expanded for blueprints, decisions, runbooks, and templates.
+The baseline profile selects the repository, backend, frontend, testing, security, and operating conventions required for version 1. Extensions remain inactive until a current requirement meets their activation criteria and the consumer lists them in `standards.project.json`.
 
-Standards change in the GitHub repository; this site is rebuilt when that content is updated in the public site repo. For the latest source or to propose edits, use the [Engineering Standards](https://github.com/Litenova-Solutions/Engineering-Standards) repository.
+Start with the baseline. Add an extension only when the product needs its behavior.

@@ -1,17 +1,51 @@
 import { StandardsHero } from '@/components/standards/StandardsHero';
 import { StandardsHomeBody } from '@/components/standards/StandardsHomeBody';
+import { JsonLd } from '@/components/JsonLd';
+import { createPageMetadata } from '@/lib/metadata';
+import { absoluteUrl, siteConfig } from '@/lib/site';
+import { standardsRepository, standardsTag, standardsVersion } from '@/lib/standards';
 
-export const metadata = {
-  title: 'Engineering Standards | Litenova Solutions',
-  description:
-    'Public engineering standards for Litenova Solutions — architecture, conventions, guides, and decisions.',
-};
+const description =
+  'Engineering Standards v1 for one bounded-context ASP.NET Core, PostgreSQL, Marten, and optional Next.js application.';
+
+export const metadata = createPageMetadata({
+  title: 'Engineering Standards v1',
+  description,
+  path: '/Standards',
+});
 
 export default function StandardsHomePage() {
   return (
-    <div className="min-h-screen bg-litenova-dark text-gray-100">
-      <StandardsHero />
-      <StandardsHomeBody />
-    </div>
+    <>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Litenova Engineering Standards',
+          description,
+          url: absoluteUrl('/Standards'),
+          version: standardsVersion,
+          isPartOf: {
+            '@type': 'WebSite',
+            name: siteConfig.name,
+            url: siteConfig.url,
+          },
+          mainEntity: {
+            '@type': 'CreativeWork',
+            name: `Engineering Standards ${standardsTag}`,
+            url: `${standardsRepository}/tree/${standardsTag}`,
+            license: `${standardsRepository}/blob/${standardsTag}/LICENSE`,
+          },
+        }}
+      />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="min-h-screen bg-litenova-dark text-gray-100 [grid-area:main]"
+      >
+        <StandardsHero />
+        <StandardsHomeBody />
+      </main>
+    </>
   );
 }

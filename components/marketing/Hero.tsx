@@ -1,57 +1,44 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import { BookIcon, MailIcon } from '@/components/ui/Icons';
 
 export function Hero() {
   return (
-    <section className="relative dot-grid overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="w-[600px] h-[600px] rounded-full bg-litenova-gold/5 blur-3xl"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div className="text-center max-w-3xl mx-auto animate-fade-in">
-          <div className="flex justify-center mb-8">
-            <img
-              src="/logo.svg"
-              alt="Litenova Logo"
-              className="h-64 w-auto object-contain drop-shadow-lg"
-            />
-          </div>
-
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-litenova-gold/30 bg-litenova-gold-dim text-litenova-gold text-xs font-medium mb-6 tracking-wide">
-            AI-Driven Software Studio
-          </div>
-
-          <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
-            We Build Distributed Systems to{' '}
-            <span className="text-litenova-gold">a Standard We Publish</span>
+    <section aria-labelledby="home-title" className="relative overflow-hidden dot-grid">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[36rem] max-w-5xl bg-[radial-gradient(circle_at_center,rgba(255,206,99,0.12),transparent_62%)]"
+      />
+      <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8 lg:py-32">
+        <div className="animate-fade-in">
+          <Image
+            src="/logo.svg"
+            alt="Litenova Solutions"
+            width={500}
+            height={500}
+            className="mx-auto mb-8 h-auto w-40 drop-shadow-[0_18px_45px_rgba(255,206,99,0.12)] sm:w-48"
+            priority
+          />
+          <p className="eyebrow">Independent Software Studio in Rotterdam</p>
+          <h1
+            id="home-title"
+            className="mx-auto mt-5 max-w-3xl text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
+          >
+            Software Engineering for Distributed .NET Systems
           </h1>
-
-          <p className="text-lg text-gray-400 mb-10 leading-relaxed">
-            An independent studio building high-throughput, fault-tolerant systems in
-            .NET. We build with AI at every stage, hold each release to the
-            engineering standards we publish, and prove the approach in the
-            products we run ourselves.
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-gray-300">
+            Litenova Solutions designs and implements distributed .NET systems,
+            reviews existing codebases, and maintains open-source engineering
+            tools.
           </p>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href="#contact"
-              className="bg-litenova-gold text-litenova-dark px-6 py-3 rounded-md font-semibold text-sm hover:bg-litenova-gold/90 transition-all duration-200 shadow-md"
-            >
-              Get Started
-            </a>
-            <a
-              href="#projects"
-              className="bg-transparent text-litenova-gold px-6 py-3 rounded-md border border-litenova-gold/40 text-sm hover:bg-litenova-gold-dim transition-all duration-200"
-            >
-              View Projects
-            </a>
-            <Link
-              href="/Standards/"
-              className="bg-transparent text-gray-400 px-6 py-3 rounded-md border border-litenova-border text-sm hover:border-litenova-gold/30 hover:text-gray-200 transition-all duration-200 flex items-center gap-2"
-            >
-              <i className="fas fa-book text-sm"></i>
-              Engineering Standards
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/Standards" className="button button-secondary">
+              <BookIcon className="size-4" />
+              Engineering Standards v1
+            </Link>
+            <Link href="/#contact" className="button button-quiet">
+              <MailIcon className="size-4" />
+              Contact
             </Link>
           </div>
         </div>
