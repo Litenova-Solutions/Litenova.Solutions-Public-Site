@@ -1,263 +1,372 @@
 #!/usr/bin/env node
-/**
- * Copy engineering-standards/docs into .standards-src, overlay standards-overrides,
- * and apply Fumadocs site transforms (titles, link paths, horizontal rule cleanup).
- */
+
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const standardsRoot = path.join(root, 'engineering-standards');
+const docsSource = path.join(standardsRoot, 'docs');
+const templatesSource = path.join(standardsRoot, 'templates', 'docs');
+const overridesSource = path.join(root, 'standards-overrides');
+const stageDirectory = path.join(root, '.standards-src');
+const splashDirectory = path.join(root, 'standards-splash');
+const publicDirectory = path.join(root, 'public');
+const standardsPrefix = '/Standards';
+const siteUrl = 'https://www.litenova.solutions';
 
-const SRC_DOCS = path.join(root, 'engineering-standards', 'docs');
-const STAGE_DIR = path.join(root, '.standards-src');
-const OVERRIDES_DIR = path.join(root, 'standards-overrides');
-
-const STANDARDS_PREFIX = '/Standards';
-
-/** Files to omit from the public site (empty = ship full docs tree including templates). */
-const EXCLUDE_REL = new Set();
-
-const COMPAT_FIXES = [];
-
-function rmDir(dir) {
-  if (fs.existsSync(dir)) {
-    fs.rmSync(dir, { recursive: true, force: true });
+function removeDirectory(directory) {
+  if (fs.existsSync(directory)) {
+    fs.rmSync(directory, { recursive: true, force: true });
   }
 }
 
-function copyDir(src, dest, rel = '') {
-  for (const name of fs.readdirSync(src, { withFileTypes: true })) {
-    const srcPath = path.join(src, name.name);
-    const relPath = path.join(rel, name.name).replace(/\\/g, '/');
+function copyDirectory(source, destination) {
+  if (!fs.existsSync(source)) return;
 
-    if (name.isDirectory()) {
-      fs.mkdirSync(path.join(dest, name.name), { recursive: true });
-      copyDir(srcPath, path.join(dest, name.name), relPath);
+  for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
+    const sourcePath = path.join(source, entry.name);
+    const destinationPath = path.join(destination, entry.name);
+
+    if (entry.isDirectory()) {
+      fs.mkdirSync(destinationPath, { recursive: true });
+      copyDirectory(sourcePath, destinationPath);
       continue;
     }
 
-    if (!name.isFile()) continue;
-    if (EXCLUDE_REL.has(relPath)) continue;
-
-    fs.mkdirSync(path.dirname(path.join(dest, name.name)), { recursive: true });
-    fs.copyFileSync(srcPath, path.join(dest, name.name));
+    if (!entry.isFile()) continue;
+    fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
+    fs.copyFileSync(sourcePath, destinationPath);
   }
 }
 
-function overlayDir(src, dest) {
-  if (!fs.existsSync(src)) return;
+function copyFile(source, destination) {
+  if (!fs.existsSync(source)) return;
+  fs.mkdirSync(path.dirname(destination), { recursive: true });
+  fs.copyFileSync(source, destination);
+}
 
-  for (const name of fs.readdirSync(src, { withFileTypes: true })) {
-    const srcPath = path.join(src, name.name);
-    const destPath = path.join(dest, name.name);
+function listMarkdownFiles(directory, relativeDirectory = '') {
+  const files = [];
 
-    if (name.isDirectory()) {
-      fs.mkdirSync(destPath, { recursive: true });
-      overlayDir(srcPath, destPath);
-    } else if (name.isFile()) {
-      fs.mkdirSync(path.dirname(destPath), { recursive: true });
-      fs.copyFileSync(srcPath, destPath);
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const fullPath = path.join(directory, entry.name);
+    const relativePath = path
+      .join(relativeDirectory, entry.name)
+      .replace(/\\/g, '/');
+
+    if (entry.isDirectory()) {
+      files.push(...listMarkdownFiles(fullPath, relativePath));
+    } else if (entry.isFile() && /\.mdx?$/i.test(entry.name)) {
+      files.push(relativePath);
     }
   }
+
+  return files;
 }
 
-function applyCompatFixes() {
-  for (const { file, search, replace } of COMPAT_FIXES) {
-    const target = path.join(STAGE_DIR, file);
-    if (!fs.existsSync(target)) continue;
+function splitFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---\n*/);
+  if (!match) return { frontmatter: '', body: text };
 
-    const text = fs.readFileSync(target, 'utf8');
-    if (!text.includes(search)) continue;
-
-    fs.writeFileSync(target, text.replace(search, replace), 'utf8');
-  }
+  return {
+    frontmatter: match[1],
+    body: text.slice(match[0].length),
+  };
 }
 
-function toSiteSlug(filePath) {
-  let slug = filePath.replace(/\\/g, '/').replace(/\.mdx?$/i, '');
-  if (slug.endsWith('/README') || slug.endsWith('/readme')) {
-    slug = slug.replace(/\/(README|readme)$/i, '');
-  } else if (/^(README|readme)$/i.test(slug)) {
-    slug = '';
-  }
-  return slug ? `${STANDARDS_PREFIX}/${slug}` : STANDARDS_PREFIX;
+function cleanInlineMarkdown(value) {
+  return value
+    .replace(/\[([^\]]+)]\([^)]+\)/g, '$1')
+    .replace(/[`*_]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
-function resolveDocPath(href, currentRel) {
-  const [rawPath, hash = ''] = href.split('#');
-  if (!rawPath || /^https?:\/\//i.test(rawPath) || rawPath.startsWith('mailto:')) {
-    return { external: true, href };
+function truncateDescription(value, maximumLength = 158) {
+  if (value.length <= maximumLength) return value;
+
+  const firstSentence = value.match(/^.*?[.!?](?=\s|$)/)?.[0];
+  if (firstSentence && firstSentence.length >= 30) return firstSentence;
+
+  const shortened = value.slice(0, maximumLength + 1);
+  const lastSpace = shortened.lastIndexOf(' ');
+  return `${shortened.slice(0, lastSpace > 100 ? lastSpace : maximumLength).trim()}...`;
+}
+
+function extractDescription(body) {
+  const intent = body.match(/(?:^|\n)## Intent\s*\n+([\s\S]*?)(?=\n## |$)/i)?.[1];
+  const candidates = (intent ?? body).split(/\n\s*\n/);
+
+  for (const candidate of candidates) {
+    const paragraph = candidate.trim();
+    if (!paragraph) continue;
+    if (/^(#|[-*+] |\d+\. |\||```|:::|>)/.test(paragraph)) continue;
+
+    const description = cleanInlineMarkdown(paragraph);
+    if (description.length >= 30) return truncateDescription(description);
   }
 
+  return undefined;
+}
+
+function addMetadata(text) {
+  const { frontmatter, body } = splitFrontmatter(text);
+  const hasJsonFrontmatter = frontmatter.trimStart().startsWith('{');
+  const title = hasJsonFrontmatter
+    ? undefined
+    : frontmatter.match(/^title:\s*(.+)$/m)?.[1];
+  const heading = body.match(/^#\s+(.+)$/m)?.[1]?.trim();
+  const description = hasJsonFrontmatter
+    ? undefined
+    : frontmatter.match(/^description:\s*(.+)$/m)?.[1];
+  const inferredDescription = extractDescription(body);
+
+  if (!title && !heading) return text;
+
+  const metadata = frontmatter && !hasJsonFrontmatter ? frontmatter.split('\n') : [];
+  if (!title && heading) metadata.unshift(`title: ${JSON.stringify(heading)}`);
+  if (!description && inferredDescription) {
+    metadata.push(`description: ${JSON.stringify(inferredDescription)}`);
+  }
+
+  const bodyWithoutDuplicateTitle = body.replace(
+    /^\s*#\s+.+\n(?:\s*\n)?/,
+    '',
+  );
+  const templateMetadata = hasJsonFrontmatter
+    ? `## Template metadata\n\n\`\`\`json\n${frontmatter.trim()}\n\`\`\`\n\n`
+    : '';
+
+  return `---\n${metadata.join('\n').trim()}\n---\n\n${templateMetadata}${bodyWithoutDuplicateTitle}`;
+}
+
+function routeForMarkdown(relativePath) {
+  let slug = relativePath.replace(/\\/g, '/').replace(/\.mdx?$/i, '');
+
+  if (/(^|\/)(README|readme|index)$/i.test(slug)) {
+    slug = slug.replace(/(^|\/)(README|readme|index)$/i, '');
+  }
+
+  return slug ? `${standardsPrefix}/${slug}` : standardsPrefix;
+}
+
+function normalizeSourcePath(rawPath, currentRelativePath) {
+  const currentDirectory = path.posix.dirname(currentRelativePath);
   let resolved = rawPath.replace(/\\/g, '/');
-  const currentDir = path.posix.dirname(currentRel.replace(/\\/g, '/'));
 
-  if (resolved.startsWith('/Standards/')) {
-    return { external: false, href: `${resolved}${hash ? `#${hash}` : ''}` };
-  }
+  if (resolved.startsWith('/')) return resolved.slice(1);
 
-  if (resolved.startsWith('/')) {
-    resolved = resolved.slice(1);
-  } else if (resolved.startsWith('docs/')) {
-    resolved = resolved.slice(5);
-  } else {
-    resolved = path.posix.normalize(path.posix.join(currentDir, resolved));
-  }
+  resolved = path.posix.normalize(path.posix.join(currentDirectory, resolved));
 
-  const hashSuffix = hash ? `#${hash}` : '';
+  if (/^(\.\.\/)+ROADMAP\.md$/i.test(resolved)) return 'roadmap.md';
+  if (/^(\.\.\/)+CHANGELOG\.md$/i.test(resolved)) return 'release-notes.md';
 
-  if (/\.mdx?$/i.test(resolved)) {
-    return { external: false, href: `${toSiteSlug(resolved)}${hashSuffix}` };
-  }
+  resolved = resolved.replace(/^(\.\.\/)+templates\/docs\//i, 'templates/');
+  resolved = resolved.replace(/^(\.\.\/)+docs\//i, '');
 
-  return { external: false, href: href };
+  return resolved;
 }
 
-function rewriteMarkdownLinks(text, currentRel) {
-  return text.replace(/\[([^\]]*)\]\(([^)]+)\)/g, (match, label, href) => {
-    const trimmed = href.trim();
-    if (trimmed.startsWith('#')) return match;
+function rewriteMarkdownLinks(text, currentRelativePath) {
+  return text.replace(/\[([^\]]*)]\(([^)]+)\)/g, (match, label, target) => {
+    const trimmedTarget = target.trim();
+    if (
+      trimmedTarget.startsWith('#') ||
+      /^(https?:|mailto:|tel:)/i.test(trimmedTarget)
+    ) {
+      return match;
+    }
 
-    const { external, href: next } = resolveDocPath(trimmed, currentRel);
-    if (external && next === trimmed) return match;
-    if (!external && next === trimmed) return match;
+    const hashIndex = trimmedTarget.indexOf('#');
+    const rawPath = hashIndex >= 0 ? trimmedTarget.slice(0, hashIndex) : trimmedTarget;
+    const hash = hashIndex >= 0 ? trimmedTarget.slice(hashIndex) : '';
 
-    return `[${label}](${next})`;
+    if (!rawPath) return match;
+    if (rawPath.startsWith(`${standardsPrefix}/`)) return match;
+    if (rawPath === standardsPrefix) return match;
+    if (rawPath.startsWith('/') && !rawPath.startsWith('/docs/')) return match;
+
+    const normalizedPath = normalizeSourcePath(rawPath, currentRelativePath);
+    if (!/\.mdx?$/i.test(normalizedPath)) return match;
+
+    return `[${label}](${routeForMarkdown(normalizedPath)}${hash})`;
   });
 }
 
-function collapseHorizontalRules(text) {
-  let out = text.replace(/\r\n/g, '\n');
-  let prev;
-  do {
-    prev = out;
-    out = out.replace(/(\n---\n)(?:[ \t]*\n---\n)+/g, '$1');
-    out = out.replace(/(---\n\n)---\n\n/g, '$1');
-    out = out.replace(/(\n---\n)\n{3,}/g, '$1\n\n');
-  } while (out !== prev);
-  return out;
+function transformMarkdown(relativePath, text) {
+  const normalized = text.replace(/\r\n/g, '\n');
+  return rewriteMarkdownLinks(addMetadata(normalized), relativePath).trimEnd() + '\n';
 }
 
-function stripDuplicateH1(text) {
-  const fmMatch = text.match(/^---\n[\s\S]*?\n---\n*/);
-  if (!fmMatch) return text;
+function createJsonTemplatePage() {
+  const templatePath = path.join(templatesSource, 'standards.project.json');
+  if (!fs.existsSync(templatePath)) return;
 
-  const rest = text.slice(fmMatch[0].length);
-  const stripped = rest.replace(/^\s*#\s+.+\r?\n(\s*\r?\n)?/, '');
-  return fmMatch[0] + stripped;
-}
-
-function stripStarlightFrontmatter(text) {
-  const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n*/);
-  if (!fmMatch) return text;
-
-  const lines = fmMatch[1].split('\n');
-  const kept = [];
-  let skipBlock = false;
-
-  for (const line of lines) {
-    if (/^template:/.test(line) || /^editUrl:/.test(line)) continue;
-    if (/^hero:/.test(line)) {
-      skipBlock = true;
-      continue;
-    }
-    if (skipBlock) {
-      if (line.startsWith('  ') || line.startsWith('\t')) continue;
-      skipBlock = false;
-    }
-    kept.push(line);
-  }
-
-  const block = `---\n${kept.join('\n').trimEnd()}\n---\n\n`;
-  return block + text.slice(fmMatch[0].length);
-}
-
-function injectTitles(text) {
-  const fmMatch = text.match(/^---\n([\s\S]*?)\n---/);
-  if (fmMatch && /^title:\s/m.test(fmMatch[1])) return text;
-
-  const h1Match = text.match(/^#\s+(.+)$/m);
-  if (!h1Match) return text;
-
-  const title = h1Match[1].trim();
-  const block = `---\ntitle: ${JSON.stringify(title)}\n---\n\n`;
-
-  if (fmMatch) {
-    return text.replace(/^---\n[\s\S]*?\n---\n?/, block);
-  }
-  return block + text;
-}
-
-function transformMarkdown(fileRel, text) {
-  let out = injectTitles(text);
-  out = stripDuplicateH1(out);
-  out = collapseHorizontalRules(out);
-  out = rewriteMarkdownLinks(out, fileRel);
-  return out;
-}
-
-function processAllMarkdown(dir, rel = '') {
-  for (const name of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, name.name);
-    const relPath = path.join(rel, name.name).replace(/\\/g, '/');
-
-    if (name.isDirectory()) {
-      processAllMarkdown(full, relPath);
-      continue;
-    }
-    if (!/\.mdx?$/i.test(name.name)) continue;
-
-    const raw = fs.readFileSync(full, 'utf8');
-    let transformed = transformMarkdown(relPath, raw);
-    if (relPath === 'index.md') {
-      transformed = stripStarlightFrontmatter(transformed);
-    }
-    fs.writeFileSync(full, transformed, 'utf8');
-  }
-}
-
-function postProcessStagedFiles() {
-  const splashPath = path.join(STAGE_DIR, 'index.md');
-  const splashOutDir = path.join(root, 'standards-splash');
-  const splashOut = path.join(splashOutDir, 'body.md');
-
-  if (fs.existsSync(splashPath)) {
-    fs.mkdirSync(splashOutDir, { recursive: true });
-    fs.renameSync(splashPath, splashOut);
-  }
-
-  const stagedSplash = path.join(STAGE_DIR, '_splash-body.md');
-  if (fs.existsSync(stagedSplash)) {
-    fs.mkdirSync(splashOutDir, { recursive: true });
-    fs.renameSync(stagedSplash, splashOut);
-  }
-
-  const rootReadme = path.join(STAGE_DIR, 'README.md');
-  if (fs.existsSync(rootReadme)) {
-    fs.renameSync(rootReadme, path.join(STAGE_DIR, 'doc-map.md'));
-  }
-
-  const staged404 = path.join(STAGE_DIR, '404.md');
-  if (fs.existsSync(staged404)) {
-    fs.rmSync(staged404, { force: true });
-  }
-}
-
-if (!fs.existsSync(SRC_DOCS)) {
-  console.error(
-    'engineering-standards/docs not found. Run: git submodule update --init --recursive',
+  const json = fs.readFileSync(templatePath, 'utf8').trim();
+  const page = `# standards.project.json\n\n## Intent\n\nThis consumer configuration selects the standards profile and enabled extensions for one repository. Copy it to the consumer repository root and replace the example values.\n\n## Template\n\n\`\`\`json\n${json}\n\`\`\`\n`;
+  const destination = path.join(
+    stageDirectory,
+    'templates',
+    'standards-project-json.md',
   );
-  process.exit(1);
+
+  fs.writeFileSync(destination, page, 'utf8');
 }
 
-rmDir(STAGE_DIR);
-fs.mkdirSync(STAGE_DIR, { recursive: true });
-copyDir(SRC_DOCS, STAGE_DIR);
-overlayDir(OVERRIDES_DIR, STAGE_DIR);
-applyCompatFixes();
-processAllMarkdown(STAGE_DIR);
-postProcessStagedFiles();
+function prepareSourceTree() {
+  removeDirectory(stageDirectory);
+  fs.mkdirSync(stageDirectory, { recursive: true });
 
-console.log(`Staged standards docs → ${path.relative(root, STAGE_DIR)}`);
+  copyDirectory(docsSource, stageDirectory);
+  copyDirectory(templatesSource, path.join(stageDirectory, 'templates'));
+  copyFile(
+    path.join(standardsRoot, 'ROADMAP.md'),
+    path.join(stageDirectory, 'roadmap.md'),
+  );
+  copyFile(
+    path.join(standardsRoot, 'CHANGELOG.md'),
+    path.join(stageDirectory, 'release-notes.md'),
+  );
+  copyDirectory(overridesSource, stageDirectory);
+  createJsonTemplatePage();
+
+  const readme = path.join(stageDirectory, 'README.md');
+  if (fs.existsSync(readme)) {
+    fs.renameSync(readme, path.join(stageDirectory, 'doc-map.md'));
+  }
+}
+
+function transformSourceTree() {
+  for (const relativePath of listMarkdownFiles(stageDirectory)) {
+    const fullPath = path.join(stageDirectory, relativePath);
+    const transformed = transformMarkdown(
+      relativePath,
+      fs.readFileSync(fullPath, 'utf8'),
+    );
+    fs.writeFileSync(fullPath, transformed, 'utf8');
+  }
+}
+
+function moveSplashPage() {
+  const splashSource = path.join(stageDirectory, 'index.md');
+  const splashDestination = path.join(splashDirectory, 'body.md');
+
+  if (!fs.existsSync(splashSource)) {
+    throw new Error('standards-overrides/index.md did not stage correctly.');
+  }
+
+  fs.mkdirSync(splashDirectory, { recursive: true });
+  fs.copyFileSync(splashSource, splashDestination);
+  fs.rmSync(splashSource);
+}
+
+function validateInternalRoutes() {
+  const routes = new Set([
+    standardsPrefix,
+    ...listMarkdownFiles(stageDirectory).map(routeForMarkdown),
+  ]);
+  const errors = [];
+  const files = [
+    ...listMarkdownFiles(stageDirectory).map((relativePath) => ({
+      relativePath,
+      fullPath: path.join(stageDirectory, relativePath),
+    })),
+    {
+      relativePath: 'standards-overrides/index.md',
+      fullPath: path.join(splashDirectory, 'body.md'),
+    },
+  ];
+
+  for (const file of files) {
+    const text = fs.readFileSync(file.fullPath, 'utf8');
+    const links = text.matchAll(/\[[^\]]*]\((\/Standards[^)#\s]*)(?:#[^)]*)?\)/g);
+
+    for (const match of links) {
+      const route = match[1].replace(/\/$/, '') || standardsPrefix;
+      if (!routes.has(route)) {
+        errors.push(`${file.relativePath}: unresolved route ${route}`);
+      }
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Broken standards links:\n${errors.join('\n')}`);
+  }
+}
+
+function forLlmText(text) {
+  const { frontmatter, body } = splitFrontmatter(text);
+  const title = frontmatter.match(/^title:\s*(.+)$/m)?.[1]?.replace(/^['"]|['"]$/g, '');
+  return `${title ? `# ${title}\n\n` : ''}${body.trim()}`;
+}
+
+function writeLlmFiles() {
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(standardsRoot, 'standards.manifest.json'), 'utf8'),
+  );
+  const markdownFiles = listMarkdownFiles(stageDirectory).sort();
+  const indexLines = [
+    '# Litenova Solutions',
+    '',
+    '> Independent software studio for distributed .NET systems and AI-assisted delivery.',
+    '',
+    `- [Website](${siteUrl}/)`,
+    `- [Services](${siteUrl}/services)`,
+    `- [Products and open source](${siteUrl}/open-source)`,
+    `- [Engineering Standards v${manifest.version}](${siteUrl}${standardsPrefix})`,
+    `- [Standards documentation map](${siteUrl}${standardsPrefix}/doc-map)`,
+    `- [Complete standards text](${siteUrl}/llms-full.txt)`,
+    '',
+  ];
+
+  const fullText = [
+    ...indexLines,
+    '# Engineering Standards full text',
+    '',
+    `Version: ${manifest.version}`,
+    `Source: https://github.com/Litenova-Solutions/Engineering-Standards/tree/v${manifest.version}`,
+    '',
+    ...markdownFiles.flatMap((relativePath) => {
+      const content = forLlmText(
+        fs.readFileSync(path.join(stageDirectory, relativePath), 'utf8'),
+      );
+      return [
+        `Source page: ${siteUrl}${routeForMarkdown(relativePath)}`,
+        '',
+        content,
+        '',
+        '---',
+        '',
+      ];
+    }),
+  ];
+
+  fs.mkdirSync(publicDirectory, { recursive: true });
+  fs.writeFileSync(path.join(publicDirectory, 'llms.txt'), indexLines.join('\n'), 'utf8');
+  fs.writeFileSync(
+    path.join(publicDirectory, 'llms-full.txt'),
+    fullText.join('\n'),
+    'utf8',
+  );
+}
+
+if (!fs.existsSync(docsSource)) {
+  throw new Error(
+    'Engineering Standards content is missing. Run git submodule update --init --recursive.',
+  );
+}
+
+const manifest = JSON.parse(
+  fs.readFileSync(path.join(standardsRoot, 'standards.manifest.json'), 'utf8'),
+);
+
+prepareSourceTree();
+transformSourceTree();
+moveSplashPage();
+validateInternalRoutes();
+writeLlmFiles();
+
+console.log(
+  `Staged ${listMarkdownFiles(stageDirectory).length} standards pages from Engineering Standards v${manifest.version}.`,
+);

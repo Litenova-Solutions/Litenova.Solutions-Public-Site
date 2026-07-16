@@ -1,9 +1,9 @@
 {
   "name": "litenova-solutions-public-site",
-  "description": "Public marketing site and Engineering Standards documentation for Litenova Solutions — Next.js, Fumadocs, Vercel.",
+  "description": "Public website and Engineering Standards documentation for Litenova Solutions, built with Next.js and Fumadocs.",
   "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://litenova.solutions",
+  "homepage": "https://www.litenova.solutions",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site.git"
@@ -14,29 +14,41 @@
   "author": "Litenova Solutions <info@litenova.solutions>",
   "private": false,
   "type": "module",
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@11.13.1",
+  "engines": {
+    "node": ">=24.11.0 <25"
+  },
   "scripts": {
-    "stage": "node scripts/stage-standards-docs.mjs",
-    "dev": "pnpm stage && next dev",
-    "build": "pnpm stage && next build",
+    "content:stage": "node scripts/stage-standards-docs.mjs",
+    "dev": "pnpm run content:stage && next dev",
+    "build": "pnpm run content:stage && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --max-warnings=0",
+    "type-check": "pnpm run content:stage && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "validate": "pnpm run content:stage && node scripts/validate-site.mjs",
+    "check": "pnpm lint && pnpm type-check && pnpm test && pnpm validate && pnpm build"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "fumadocs-core": "^16.0.7",
-    "fumadocs-mdx": "^14.2.5",
-    "fumadocs-ui": "^16.0.7",
-    "next": "^16.2.10",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "fumadocs-core": "16.11.5",
+    "fumadocs-mdx": "15.2.0",
+    "fumadocs-ui": "16.11.5",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.13",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
-    "tailwindcss": "^4.1.13",
-    "typescript": "^5.8.3"
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "title": "Baseline decisions",
+  "defaultOpen": false,
+  "pages": [
+    "README",
+    "single-use-case-specification",
+    "compact-application-assembly",
+    "marten-default-persistence",
+    "litebus-commit-pipeline",
+    "pinned-standards-submodule"
+  ]
+}

@@ -6,7 +6,10 @@ export function StandardsHomeBody() {
   const MDX = SplashBody;
 
   return (
-    <div className="standards-splash mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div
+      id="standards-content"
+      className="standards-splash mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8"
+    >
       <DocsBody>
         <MDX components={{ ...defaultMdxComponents }} />
       </DocsBody>

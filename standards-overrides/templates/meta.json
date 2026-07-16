@@ -1,0 +1,18 @@
+{
+  "title": "Consumer templates",
+  "defaultOpen": false,
+  "pages": [
+    "README",
+    "standards-project-json",
+    "project-agents",
+    "product-brief",
+    "domain-index",
+    "capability",
+    "use-case",
+    "page",
+    "glossary",
+    "decision",
+    "runbook",
+    "release-evidence"
+  ]
+}

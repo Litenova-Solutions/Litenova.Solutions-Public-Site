@@ -1,71 +1,84 @@
-# Contributing to Litenova Solutions Public Site
+# Contributing to the Litenova Solutions Public Site
 
-Thank you for your interest in contributing. This repository hosts the public marketing site and the Engineering Standards documentation shell at [litenova.solutions](https://litenova.solutions).
+Thank you for contributing. This repository contains the company website and
+the presentation layer for Litenova Engineering Standards.
 
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+Read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before participating. Report
+security issues through [SECURITY.md](SECURITY.md), not a public issue.
 
-## What belongs where
+## Choose the correct repository
 
-| Change type | Repository |
-|-------------|------------|
-| Next.js app, marketing copy, theme, staging scripts, `standards-overrides/` | **This repository** |
-| Normative standards markdown (conventions, guides, ADRs, runbooks) | [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) |
+| Change | Repository |
+| --- | --- |
+| Next.js routes, company copy, theme, navigation, staging, SEO, or tests | This repository |
+| Normative standards, guides, decisions, templates, or release manifest | [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) |
 
-Do not edit files under `engineering-standards/` directly for long-lived changes. That directory is a git submodule pointing at the Engineering-Standards repo.
+Do not make long-lived edits inside `engineering-standards`. It is a Git
+submodule pinned to the published v1 release.
 
 ## Prerequisites
 
-- Node.js 22+
-- pnpm 10+
-- Git with submodule support
+- Node.js 24.16.0.
+- pnpm 11.13.1 through Corepack.
+- Git with submodule support.
+- Chromium installed through Playwright for browser checks.
 
-## Local setup
+## Setup
 
 ```bash
 git clone --recurse-submodules git@github.com:Litenova-Solutions/Litenova.Solutions-Public-Site.git
 cd Litenova.Solutions-Public-Site
-git submodule update --init --recursive   # if needed
-pnpm install
+corepack enable
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
 pnpm dev
 ```
 
-Open:
+Open `http://localhost:3000` for the company site and
+`http://localhost:3000/Standards` for the standards.
 
-- Marketing: http://localhost:3000/
-- Standards home: http://localhost:3000/Standards/
-- Sample doc: http://localhost:3000/Standards/guides/onboarding
+## Change workflow
 
-## Website changes (this repo)
+1. Create a focused branch from `main`.
+2. Preserve the standards submodule pin unless the change explicitly publishes
+   another accepted standards release.
+3. Keep shared company and project facts in `lib/site.ts` and `lib/projects.ts`.
+4. Add or update tests for public routes, navigation, metadata, or behavior.
+5. Run all required checks.
+6. Open a pull request that explains the user-visible outcome, operating impact,
+   verification evidence, and any intentionally skipped check.
 
-1. Create a branch from `main`.
-2. Make your changes in `app/`, `components/`, `lib/`, or `standards-overrides/`.
-3. Run `pnpm build` before opening a pull request.
-4. Open a PR with a clear description of what changed and why.
+Required checks:
 
-## Standards content changes
+```bash
+pnpm check
+pnpm test:e2e
+git diff --check
+```
 
-1. Open a PR in [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards).
-2. After merge, update the submodule pointer in this repo:
+`pnpm check` runs lint, type checking, unit tests, site validation, and the
+production build. End-to-end tests assume that build already exists.
 
-   ```bash
-   cd engineering-standards
-   git pull origin main
-   cd ..
-   git add engineering-standards
-   git commit -m "chore: bump engineering-standards submodule"
-   ```
+## Standards presentation changes
 
-3. Push and open a PR here so the live site picks up the new content.
+Use `standards-overrides` only for site navigation metadata and landing-page
+presentation. Run `pnpm run content:stage` after each change. The generated
+`.standards-src`, `.source`, and `public/llms*.txt` files must not be committed.
 
-## Site-only standards pages
+Normative content changes require a pull request in Engineering-Standards and a
+new accepted release before this site's submodule pointer changes. Do not point
+the public site at an unversioned default branch.
 
-These files live in this repo under `standards-overrides/`:
+## Pull request expectations
 
-- `index.md` — splash home body (staged to `standards-splash/body.md`)
-- `meta.json` — sidebar structure
+A pull request should include:
 
-Edit them here when you need site-specific presentation without changing normative standards content.
+- A concise statement of the problem and outcome.
+- Screenshots for visual changes at desktop and narrow widths.
+- Exact verification commands and results.
+- Accessibility and search implications for public-page changes.
+- A Vercel preview URL when the Git integration creates one.
+- An explicit note for schema, dependency, hosting, or standards-pin changes.
 
-## Questions
-
-Open a [GitHub issue](https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/issues) for bugs or feature requests related to the website tooling.
+Open a [GitHub issue](https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/issues)
+for a site bug or proposal that needs discussion.

@@ -1,115 +1,64 @@
 import Link from 'next/link';
+import { ArrowRightIcon, BookIcon } from '@/components/ui/Icons';
+import { standardsTag } from '@/lib/standards';
+
+const areas = [
+  'Repository and dependency boundaries',
+  'ASP.NET Core, Marten, and PostgreSQL conventions',
+  'Next.js rendering, components, and testing',
+  'Security, operations, CI, and release evidence',
+] as const;
 
 export function StandardsSection() {
   return (
     <section
       id="standards"
-      className="py-24 bg-litenova-surface border-y border-litenova-border"
+      aria-labelledby="standards-section-title"
+      className="section border-y border-litenova-border bg-litenova-surface"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-start gap-12">
-            <div className="flex-1">
-              <p className="text-xs uppercase tracking-widest text-litenova-gold mb-3 font-medium">
-                Open &amp; Transparent
-              </p>
-              <h2 className="text-3xl font-bold mb-5">Engineering Standards</h2>
-              <div className="w-16 h-px bg-litenova-gold mb-6"></div>
-              <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                We publish our internal engineering standards publicly on
-                GitHub. The document covers everything from architecture
-                conventions and code style to branching strategy, API design,
-                and AI-assisted workflow guidelines.
-              </p>
-              <p className="text-gray-400 text-sm leading-relaxed mb-8">
-                We publish them so clients and contributors know what to
-                expect, and so we stay accountable to our own rules.
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/Standards/"
-                  className="inline-flex items-center gap-3 bg-litenova-gold-dim text-litenova-gold px-5 py-3 rounded-md border border-litenova-gold/30 hover:bg-litenova-gold hover:text-litenova-dark transition-all duration-200 text-sm font-medium"
-                >
-                  <i className="fas fa-book"></i>
-                  Browse the Standards
-                  <i className="fas fa-arrow-right text-xs"></i>
-                </Link>
-                <a
-                  href="https://github.com/Litenova-Solutions/Engineering-Standards"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-transparent text-gray-400 px-5 py-3 rounded-md border border-litenova-border text-sm hover:border-litenova-gold/30 hover:text-gray-200 transition-all duration-200 font-medium"
-                >
-                  <i className="fab fa-github"></i>
-                  View on GitHub
-                </a>
-              </div>
-            </div>
-
-            <div className="flex-1 grid grid-cols-1 gap-4">
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-litenova-border bg-litenova-dark">
-                <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-litenova-gold-dim border border-litenova-gold/20">
-                  <i className="fas fa-layer-group text-litenova-gold text-xs"></i>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-100 mb-1">
-                    Architecture &amp; Design Patterns
-                  </h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Clean Architecture, CQRS, Domain-Driven Design, and
-                    API-first conventions.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-litenova-border bg-litenova-dark">
-                <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-litenova-gold-dim border border-litenova-gold/20">
-                  <i className="fas fa-code text-litenova-gold text-xs"></i>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-100 mb-1">
-                    Code Quality &amp; Style
-                  </h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Language-specific guidelines, naming conventions, and
-                    review checklists.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-litenova-border bg-litenova-dark">
-                <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-litenova-gold-dim border border-litenova-gold/20">
-                  <i className="fas fa-list-check text-litenova-gold text-xs"></i>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-100 mb-1">
-                    AI Workflow Guidelines
-                  </h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    How AI tooling is integrated into code generation, review,
-                    and testing processes.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-litenova-border bg-litenova-dark">
-                <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-litenova-gold-dim border border-litenova-gold/20">
-                  <i className="fas fa-code-branch text-litenova-gold text-xs"></i>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-100 mb-1">
-                    Git &amp; CI/CD Conventions
-                  </h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Branching strategy, commit message format, and pipeline
-                    standards.
-                  </p>
-                </div>
-              </div>
-            </div>
+      <div className="section-container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <p className="eyebrow">Public engineering contract</p>
+          <h2
+            id="standards-section-title"
+            className="mt-4 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl"
+          >
+            The standard behind the work is published
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
+            Engineering Standards {standardsTag} is a pinned baseline for one
+            bounded-context business application. It separates required rules,
+            replaceable conventions, and the evidence needed for review.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link href="/Standards" className="button button-primary">
+              <BookIcon className="size-4" />
+              Browse the release
+            </Link>
+            <a
+              href="https://github.com/Litenova-Solutions/Engineering-Standards/tree/v1.0.0"
+              className="button button-secondary"
+            >
+              View the source tag
+              <ArrowRightIcon className="size-4" />
+            </a>
           </div>
         </div>
+
+        <ul className="grid gap-3" aria-label="Standards coverage">
+          {areas.map((area) => (
+            <li
+              key={area}
+              className="flex items-start gap-3 rounded-lg border border-litenova-border bg-litenova-dark px-4 py-4 text-sm leading-6 text-gray-300"
+            >
+              <span
+                aria-hidden="true"
+                className="mt-2 size-1.5 shrink-0 rounded-full bg-litenova-gold"
+              />
+              {area}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

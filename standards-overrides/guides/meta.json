@@ -1,0 +1,5 @@
+{
+  "title": "Adoption guides",
+  "defaultOpen": true,
+  "pages": ["adopt-v1", "v1-release-scope", "model-domain"]
+}

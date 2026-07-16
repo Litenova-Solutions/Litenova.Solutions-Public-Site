@@ -20,7 +20,7 @@ body:
     id: url
     attributes:
       label: URL
-      description: Page where you saw the issue (e.g. https://litenova.solutions/Standards/guides/onboarding)
+      description: Page where you saw the issue, for example https://www.litenova.solutions/Standards/guides/adopt-v1
     validations:
       required: true
 
