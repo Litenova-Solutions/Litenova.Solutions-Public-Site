@@ -4,7 +4,12 @@ import { ExternalLinkIcon } from '@/components/ui/Icons';
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      title: 'Engineering Standards v1',
+      title: (
+        <>
+          <span className="hidden sm:inline">Engineering Standards v1</span>
+          <span className="sm:hidden">Standards v1</span>
+        </>
+      ),
       url: '/Standards',
     },
     links: [

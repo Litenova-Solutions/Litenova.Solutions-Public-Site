@@ -32,5 +32,12 @@ test.describe('visual review artifacts', () => {
       path: path.join(screenshotDirectory, 'home-mobile.png'),
       fullPage: true,
     });
+
+    await page.goto('/Standards');
+    await expect(page.getByText('Released baseline v1.0.0')).toBeVisible();
+    await page.screenshot({
+      path: path.join(screenshotDirectory, 'standards-mobile.png'),
+      fullPage: true,
+    });
   });
 });

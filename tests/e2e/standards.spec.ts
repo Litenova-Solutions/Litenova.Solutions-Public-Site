@@ -2,6 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test('standards landing exposes the pinned release and documentation navigation', async ({
+  isMobile,
   page,
 }) => {
   await page.goto('/Standards');
@@ -16,6 +17,16 @@ test('standards landing exposes the pinned release and documentation navigation'
     'href',
     'https://www.litenova.solutions/Standards',
   );
+
+  if (isMobile) {
+    const viewportWidth = page.viewportSize()?.width ?? 0;
+    const mainContent = await page.locator('#main-content').boundingBox();
+
+    expect(mainContent?.width).toBeGreaterThan(viewportWidth * 0.9);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      viewportWidth + 1,
+    );
+  }
 });
 
 test('a standards document renders its title, edit link, and v1 content', async ({ page }) => {
