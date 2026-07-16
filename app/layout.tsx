@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { RootProvider } from 'fumadocs-ui/provider/next';
+import { AccessibleSearchDialog } from '@/components/standards/AccessibleSearchDialog';
 import { siteConfig } from '@/lib/site';
 import './global.css';
 
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             enabled: false,
           }}
           search={{
+            SearchDialog: AccessibleSearchDialog,
             options: {
               api: '/Standards/api/search',
               type: 'static',

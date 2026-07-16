@@ -51,11 +51,26 @@ test('static standards search finds and opens a v1 topic', async ({ isMobile, pa
   await expect(dialog).toBeVisible();
   await dialog.getByPlaceholder('Search').fill('baseline persistence model');
 
-  const result = dialog.getByRole('button').filter({ hasText: 'Marten Persistence' }).first();
+  const result = dialog.getByRole('option', { name: /Marten Persistence/ }).first();
   await expect(result).toBeVisible();
   await result.click();
   await expect(page).toHaveURL(/\/Standards\/conventions\/backend\/persistence-marten$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Marten Persistence' })).toBeVisible();
+});
+
+test('open standards search has valid accessibility semantics', async ({ isMobile, page }) => {
+  await page.goto('/Standards');
+  const searchTrigger = isMobile
+    ? page.locator('button[data-search]:visible').first()
+    : page.getByRole('button', { name: /^Search/ });
+  await searchTrigger.click();
+
+  const dialog = page.getByRole('dialog', { name: 'Search' });
+  await dialog.getByPlaceholder('Search').fill('baseline persistence model');
+  await expect(dialog.getByRole('option', { name: /Marten Persistence/ }).first()).toBeVisible();
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
 });
 
 test('legacy standards entry points redirect permanently', async ({ request }) => {
