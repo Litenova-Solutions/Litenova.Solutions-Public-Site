@@ -19,7 +19,7 @@
     "node": ">=24.11.0 <25"
   },
   "scripts": {
-    "content:stage": "node scripts/stage-standards-docs.mjs",
+    "content:stage": "node scripts/stage-standards-docs.mjs && fumadocs-mdx",
     "dev": "pnpm run content:stage && next dev",
     "build": "pnpm run content:stage && next build",
     "start": "next start",
