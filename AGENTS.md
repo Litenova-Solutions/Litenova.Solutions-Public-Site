@@ -85,6 +85,11 @@ Do not add a dependency, analytics service, form processor, cookie, or other ext
 effect unless the request explicitly authorizes it. A change to personal-data handling also
 requires a privacy-notice review.
 
+Dependency updates are maintained manually. Do not add Dependabot, Renovate, or another
+automated dependency pull-request service without an explicit repository decision. For a manual
+update, review `pnpm outdated`, keep runtime type packages aligned with the selected runtime, run
+`pnpm peers check`, and commit the resulting `pnpm-lock.yaml` update with its verification.
+
 ## Verification
 
 For every site change, run:
