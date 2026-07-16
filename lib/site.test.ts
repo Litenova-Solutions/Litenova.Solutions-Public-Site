@@ -11,10 +11,8 @@ describe('site configuration', () => {
     );
   });
 
-  it('publishes every permanent marketing route', () => {
-    expect(marketingRoutes).toEqual(
-      expect.arrayContaining(['/privacy', '/accessibility', '/contact']),
-    );
+  it('publishes one company page and two reference pages', () => {
+    expect(marketingRoutes).toEqual(['/', '/privacy', '/accessibility']);
   });
 
   it('pins the released standards baseline', () => {

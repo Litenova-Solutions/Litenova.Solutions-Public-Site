@@ -4,7 +4,7 @@ export const siteConfig = {
   url: 'https://www.litenova.solutions',
   title: 'Litenova Solutions | Distributed .NET Systems',
   description:
-    'Litenova Solutions is an independent software studio in Rotterdam. We design and build distributed .NET systems, AI-assisted delivery workflows, and open-source tools.',
+    'Litenova Solutions is an independent software studio in Rotterdam. We design distributed .NET systems, review codebases, and maintain open-source engineering tools.',
   email: 'info@litenova.solutions',
   phone: {
     display: '+31 6 42 53 52 14',
@@ -24,10 +24,6 @@ export const siteConfig = {
 
 export const marketingRoutes = [
   '/',
-  '/about',
-  '/services',
-  '/open-source',
-  '/contact',
   '/privacy',
   '/accessibility',
 ] as const;

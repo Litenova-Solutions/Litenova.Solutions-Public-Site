@@ -309,11 +309,11 @@ function writeLlmFiles() {
   const indexLines = [
     '# Litenova Solutions',
     '',
-    '> Independent software studio for distributed .NET systems and AI-assisted delivery.',
+    '> Software engineering for distributed .NET systems, codebase review, and open-source tools.',
     '',
     `- [Website](${siteUrl}/)`,
-    `- [Services](${siteUrl}/services)`,
-    `- [Products and open source](${siteUrl}/open-source)`,
+    `- [Engineering Services](${siteUrl}/#services)`,
+    `- [Products and Open Source](${siteUrl}/#projects)`,
     `- [Engineering Standards v${manifest.version}](${siteUrl}${standardsPrefix})`,
     `- [Standards documentation map](${siteUrl}${standardsPrefix}/doc-map)`,
     `- [Complete standards text](${siteUrl}/llms-full.txt)`,
@@ -322,7 +322,7 @@ function writeLlmFiles() {
 
   const fullText = [
     ...indexLines,
-    '# Engineering Standards full text',
+    '# Engineering Standards Full Text',
     '',
     `Version: ${manifest.version}`,
     `Source: https://github.com/Litenova-Solutions/Engineering-Standards/tree/v${manifest.version}`,

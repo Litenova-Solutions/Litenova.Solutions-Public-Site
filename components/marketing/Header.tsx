@@ -3,19 +3,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { CloseIcon, MenuIcon } from '@/components/ui/Icons';
 
 const navigation = [
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/open-source', label: 'Products and open source' },
-  { href: '/Standards', label: 'Standards' },
+  { href: '/#services', label: 'Services' },
+  { href: '/Standards', label: 'Engineering Standards' },
+  { href: '/#projects', label: 'Open Source' },
+  { href: '/#contact', label: 'Contact' },
 ] as const;
 
 export function Header() {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -45,8 +43,7 @@ export function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    aria-current={pathname === item.href ? 'page' : undefined}
-                    className="inline-flex min-h-11 items-center rounded-md px-3 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-litenova-gold aria-[current=page]:text-litenova-gold"
+                    className="inline-flex min-h-11 items-center rounded-md px-3 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-litenova-gold"
                   >
                     {item.label}
                   </Link>
@@ -54,12 +51,6 @@ export function Header() {
               ))}
             </ul>
           </nav>
-
-          <div className="hidden md:block">
-            <Link href="/contact" className="button button-primary button-sm">
-              Discuss a project
-            </Link>
-          </div>
 
           <button
             type="button"
@@ -88,23 +79,13 @@ export function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    aria-current={pathname === item.href ? 'page' : undefined}
-                    className="flex min-h-11 items-center rounded-md px-3 text-sm text-gray-200 hover:bg-white/5 hover:text-litenova-gold aria-[current=page]:bg-litenova-gold-dim aria-[current=page]:text-litenova-gold"
+                    className="flex min-h-11 items-center rounded-md px-3 text-sm text-gray-200 hover:bg-white/5 hover:text-litenova-gold"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Link
-                  href="/contact"
-                  className="button button-primary w-full"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Discuss a project
-                </Link>
-              </li>
             </ul>
           </nav>
         ) : null}

@@ -26,7 +26,7 @@ export function StandardsHero() {
           priority
         />
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-litenova-gold">
-          Released baseline {standardsTag}
+          Released Baseline {standardsTag}
         </p>
         <h1
           id="standards-title"
@@ -43,13 +43,13 @@ export function StandardsHero() {
             href="/Standards/guides/adopt-v1"
             className="rounded-md bg-litenova-gold px-5 py-2.5 text-sm font-semibold text-litenova-dark transition hover:opacity-90"
           >
-            Adopt version 1
+            Adopt Version 1
           </Link>
           <Link
             href="/Standards/doc-map"
             className="rounded-md border border-litenova-border px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-litenova-gold/30 hover:text-litenova-gold"
           >
-            Documentation map
+            Documentation Map
           </Link>
           <a
             href="https://github.com/Litenova-Solutions/Engineering-Standards"

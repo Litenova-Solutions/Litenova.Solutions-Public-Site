@@ -8,8 +8,8 @@ test('standards landing exposes the pinned release and documentation navigation'
   await page.goto('/Standards');
 
   await expect(page.getByRole('heading', { level: 1, name: 'Engineering Standards' })).toBeVisible();
-  await expect(page.getByText('Released baseline v1.0.0')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Adopt version 1' })).toHaveAttribute(
+  await expect(page.getByText('Released Baseline v1.0.0')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Adopt Version 1' })).toHaveAttribute(
     'href',
     '/Standards/guides/adopt-v1',
   );

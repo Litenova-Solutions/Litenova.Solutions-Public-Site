@@ -58,7 +58,7 @@ export default function OpenGraphImage() {
           LITENOVA SOLUTIONS
         </div>
         <div style={{ display: 'flex', fontSize: 58, fontWeight: 750, letterSpacing: -2, marginTop: 18 }}>
-          Distributed systems, built with evidence
+          Software Engineering for Distributed .NET Systems
         </div>
         <div style={{ color: '#b8bcc5', display: 'flex', fontSize: 25, marginTop: 22 }}>
           .NET engineering | Open source | Engineering Standards v1

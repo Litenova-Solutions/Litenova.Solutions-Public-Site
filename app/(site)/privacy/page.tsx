@@ -8,14 +8,14 @@ const description =
   'How Litenova Solutions handles personal data when you visit this website or contact the company.';
 
 export const metadata = createPageMetadata({
-  title: 'Privacy',
+  title: 'Privacy Notice',
   description,
   path: '/privacy',
 });
 
 const sections = [
   {
-    title: 'Data controller',
+    title: 'Data Controller',
     content: (
       <>
         <p>
@@ -33,7 +33,7 @@ const sections = [
     ),
   },
   {
-    title: 'Information we process',
+    title: 'Information We Process',
     content: (
       <>
         <p>
@@ -53,7 +53,7 @@ const sections = [
     ),
   },
   {
-    title: 'Purposes and legal bases',
+    title: 'Purposes and Legal Bases',
     content: (
       <ul>
         <li>
@@ -73,7 +73,7 @@ const sections = [
     ),
   },
   {
-    title: 'Service providers and international processing',
+    title: 'Service Providers and International Processing',
     content: (
       <p>
         The website is hosted by Vercel. Vercel may use infrastructure and
@@ -102,7 +102,7 @@ const sections = [
     ),
   },
   {
-    title: 'Your rights',
+    title: 'Your Rights',
     content: (
       <p>
         Subject to the conditions in the General Data Protection Regulation,
@@ -127,7 +127,7 @@ export default function PrivacyPage() {
   return (
     <>
       <PageJsonLd
-        name="Privacy"
+        name="Privacy Notice"
         description={description}
         path="/privacy"
         type="WebPage"
@@ -135,13 +135,13 @@ export default function PrivacyPage() {
       <main id="main-content" tabIndex={-1} className="pt-16">
         <PageHero
           eyebrow="Legal"
-          title="Privacy"
+          title="Privacy Notice"
           description={description}
         />
 
         <div className="section bg-litenova-dark">
           <article className="legal-content section-container max-w-3xl">
-            <p className="text-sm text-gray-400">Last updated: 16 July 2026</p>
+            <p className="text-sm text-gray-400">Last Updated: 16 July 2026</p>
             {sections.map((section) => (
               <section key={section.title} aria-labelledby={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>
                 <h2 id={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>

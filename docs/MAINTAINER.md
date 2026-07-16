@@ -11,7 +11,7 @@ repository.
 
 Site-owned content lives in these locations:
 
-- Company pages: `app/(site)` and `components/marketing`.
+- Company landing page: `app/(site)/page.tsx` and `components/marketing`.
 - Shared company facts and canonical origin: `lib/site.ts`.
 - Product and open-source facts: `lib/projects.ts`.
 - Standards landing copy: `standards-overrides/index.md`.
@@ -100,9 +100,9 @@ git diff --check
 ```
 
 The Playwright suite starts the production server after `pnpm build`. Review the
-home, services, standards landing, adoption guide, privacy page, mobile menu,
-keyboard focus, and at least one narrow viewport. Automated accessibility scans
-are a gate, not a replacement for keyboard and visual review.
+company landing page, standards landing, adoption guide, privacy notice, mobile
+menu, keyboard focus, and at least one narrow viewport. Automated accessibility
+scans are a gate, not a replacement for keyboard and visual review.
 
 ## Vercel deployment
 

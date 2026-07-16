@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { ArrowRightIcon, ExternalLinkIcon } from '@/components/ui/Icons';
+import { ExternalLinkIcon } from '@/components/ui/Icons';
 import { projects } from '@/lib/projects';
 
 export function ProjectsSection() {
@@ -11,17 +10,16 @@ export function ProjectsSection() {
     >
       <div className="section-container">
         <div className="section-heading">
-          <p className="eyebrow">Products and open source</p>
-          <h2 id="projects-title">The work is visible in running products and code</h2>
+          <h2 id="projects-title">Products and Open Source</h2>
           <p>
-            We build products for our own use and publish focused engineering
-            tools where the source is useful to others.
+            Litenova maintains one product and three public .NET engineering
+            projects.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
           {projects.map((project) => (
-            <article key={project.name} className="card card-glow flex flex-col">
+            <article key={project.name} className="card flex flex-col">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-litenova-gold">
@@ -41,13 +39,13 @@ export function ProjectsSection() {
               <div className="mt-6 flex flex-wrap gap-4">
                 {project.website ? (
                   <a href={project.website} className="text-link">
-                    Visit website
+                    Website
                     <ExternalLinkIcon className="size-4" />
                   </a>
                 ) : null}
                 {project.repository ? (
                   <a href={project.repository} className="text-link">
-                    Source repository
+                    Source Repository
                     <ExternalLinkIcon className="size-4" />
                   </a>
                 ) : null}
@@ -56,12 +54,6 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
-          <Link href="/open-source" className="text-link">
-            Read about the portfolio
-            <ArrowRightIcon className="size-4" />
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -43,6 +43,26 @@ const config: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/about',
+        destination: '/#services',
+        permanent: true,
+      },
+      {
+        source: '/services',
+        destination: '/#services',
+        permanent: true,
+      },
+      {
+        source: '/open-source',
+        destination: '/#projects',
+        permanent: true,
+      },
+      {
+        source: '/contact',
+        destination: '/#contact',
+        permanent: true,
+      },
+      {
         source: '/Standards/guides/onboarding',
         destination: '/Standards/guides/adopt-v1',
         permanent: true,

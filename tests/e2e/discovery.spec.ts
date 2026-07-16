@@ -18,7 +18,7 @@ test('crawl and agent-discovery endpoints publish the complete static site', asy
   const publicUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
     (match) => match[1],
   );
-  expect(publicUrls.length).toBeGreaterThanOrEqual(74);
+  expect(publicUrls.length).toBeGreaterThanOrEqual(70);
 
   for (const publicUrl of publicUrls) {
     const url = new URL(publicUrl);

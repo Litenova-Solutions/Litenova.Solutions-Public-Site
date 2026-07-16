@@ -1,5 +1,5 @@
 {
-  "title": "Repository conventions",
+  "title": "Repository Conventions",
   "defaultOpen": false,
   "pages": ["structure", "naming", "dependencies", "configuration", "writing"]
 }

@@ -7,7 +7,7 @@ const description =
   'The accessibility approach, current measures, and feedback channel for the Litenova Solutions website.';
 
 export const metadata = createPageMetadata({
-  title: 'Accessibility',
+  title: 'Accessibility Statement',
   description,
   path: '/accessibility',
 });
@@ -16,7 +16,7 @@ export default function AccessibilityPage() {
   return (
     <>
       <PageJsonLd
-        name="Accessibility"
+        name="Accessibility Statement"
         description={description}
         path="/accessibility"
         type="WebPage"
@@ -24,16 +24,16 @@ export default function AccessibilityPage() {
       <main id="main-content" tabIndex={-1} className="pt-16">
         <PageHero
           eyebrow="Accessibility"
-          title="Access should not depend on how you browse"
+          title="Accessibility Statement"
           description={description}
         />
 
         <div className="section bg-litenova-dark">
           <article className="legal-content section-container max-w-3xl">
-            <p className="text-sm text-gray-400">Last reviewed: 16 July 2026</p>
+            <p className="text-sm text-gray-400">Last Reviewed: 16 July 2026</p>
 
             <section aria-labelledby="accessibility-target">
-              <h2 id="accessibility-target">Our target</h2>
+              <h2 id="accessibility-target">Our Target</h2>
               <p>
                 We design and test this website against the Web Content
                 Accessibility Guidelines 2.2 at level AA. This is an engineering
@@ -44,7 +44,7 @@ export default function AccessibilityPage() {
             </section>
 
             <section aria-labelledby="accessibility-measures">
-              <h2 id="accessibility-measures">Measures in place</h2>
+              <h2 id="accessibility-measures">Measures in Place</h2>
               <ul>
                 <li>Semantic landmarks, headings, labels, and link text.</li>
                 <li>A keyboard-accessible skip link and visible focus states.</li>
@@ -57,7 +57,7 @@ export default function AccessibilityPage() {
             </section>
 
             <section aria-labelledby="accessibility-limitations">
-              <h2 id="accessibility-limitations">Known limitations</h2>
+              <h2 id="accessibility-limitations">Known Limitations</h2>
               <p>
                 No known issue currently prevents access to the main marketing
                 content or Engineering Standards. Automated checks cannot find
@@ -68,7 +68,7 @@ export default function AccessibilityPage() {
             </section>
 
             <section aria-labelledby="accessibility-feedback">
-              <h2 id="accessibility-feedback">Report a barrier</h2>
+              <h2 id="accessibility-feedback">Report a Barrier</h2>
               <p>
                 If any part of the website is difficult to use, email{' '}
                 <a href={`mailto:${siteConfig.email}?subject=Website%20accessibility`}>

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Litenova Solutions',
     short_name: 'Litenova',
     description:
-      'Distributed .NET systems, engineering standards, and open-source tools.',
+      'Software engineering for distributed .NET systems, codebase review, and open-source tools.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0a0a0a',

@@ -14,7 +14,6 @@ test.describe('visual review artifacts', () => {
 
     for (const pageCase of [
       { name: 'home-desktop', path: '/' },
-      { name: 'services-desktop', path: '/services' },
       { name: 'standards-desktop', path: '/Standards' },
     ]) {
       await page.goto(pageCase.path);
@@ -34,7 +33,7 @@ test.describe('visual review artifacts', () => {
     });
 
     await page.goto('/Standards');
-    await expect(page.getByText('Released baseline v1.0.0')).toBeVisible();
+    await expect(page.getByText('Released Baseline v1.0.0')).toBeVisible();
     await page.screenshot({
       path: path.join(screenshotDirectory, 'standards-mobile.png'),
       fullPage: true,

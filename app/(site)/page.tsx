@@ -1,15 +1,14 @@
-import { AiSection } from '@/components/marketing/AiSection';
-import { ApproachSection } from '@/components/marketing/ApproachSection';
 import { ContactSection } from '@/components/marketing/ContactSection';
 import { Hero } from '@/components/marketing/Hero';
 import { ProjectsSection } from '@/components/marketing/ProjectsSection';
+import { ServicesSection } from '@/components/marketing/ServicesSection';
 import { StandardsSection } from '@/components/marketing/StandardsSection';
 import { JsonLd } from '@/components/JsonLd';
 import { createPageMetadata } from '@/lib/metadata';
 import { absoluteUrl, siteConfig } from '@/lib/site';
 
 export const metadata = createPageMetadata({
-  title: 'Distributed .NET Systems and AI-Assisted Delivery',
+  title: 'Software Engineering for Distributed .NET Systems',
   description: siteConfig.description,
   path: '/',
 });
@@ -45,7 +44,7 @@ export default function HomePage() {
                 '@type': 'ContactPoint',
                 email: siteConfig.email,
                 telephone: siteConfig.phone.display,
-                contactType: 'sales and general enquiries',
+                contactType: 'general enquiries',
                 availableLanguage: 'English',
               },
               sameAs: [siteConfig.github, siteConfig.linkedin],
@@ -62,7 +61,7 @@ export default function HomePage() {
               '@type': 'ProfessionalService',
               '@id': absoluteUrl('/#services'),
               name: siteConfig.name,
-              url: absoluteUrl('/services'),
+              url: absoluteUrl('/#services'),
               provider: { '@id': absoluteUrl('/#organization') },
               serviceType: [
                 'Distributed systems engineering',
@@ -75,8 +74,7 @@ export default function HomePage() {
       />
       <main id="main-content" tabIndex={-1} className="pt-16">
         <Hero />
-        <ApproachSection />
-        <AiSection />
+        <ServicesSection />
         <StandardsSection />
         <ProjectsSection />
         <ContactSection />

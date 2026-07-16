@@ -3,27 +3,27 @@ title: Engineering Standards v1
 description: The released Litenova baseline for one bounded-context ASP.NET Core, PostgreSQL, Marten, and optional Next.js application.
 ---
 
-## A pinned engineering baseline
+## Pinned Engineering Baseline
 
 This site publishes **Engineering Standards v1.0.0**, the same Markdown release used by Litenova consumer repositories. Version 1 covers one bounded-context business application built with ASP.NET Core, PostgreSQL, Marten, and optional Next.js frontends.
 
 The release is pinned to the [v1.0.0 source tag](https://github.com/Litenova-Solutions/Engineering-Standards/tree/v1.0.0). Standards pages are read-only here. Proposed corrections belong in the [Engineering Standards repository](https://github.com/Litenova-Solutions/Engineering-Standards).
 
-## Choose an entry point
+## Choose an Entry Point
 
-| Goal | Start here |
+| Goal | Start Here |
 |:---|:---|
-| Adopt the release in a repository | [Adopt standards v1](/Standards/guides/adopt-v1) |
-| Confirm that an application fits the supported scope | [Supported scope](/Standards/foundations/scope) |
-| Review the complete selected stack | [.NET and Next.js profile](/Standards/profile/dotnet-nextjs) |
+| Adopt the release in a repository | [Adopt Standards v1](/Standards/guides/adopt-v1) |
+| Confirm that an application fits the supported scope | [Supported Scope](/Standards/foundations/scope) |
+| Review the complete selected stack | [.NET and Next.js Profile](/Standards/profile/dotnet-nextjs) |
 | Understand the delivery method | [Agentic Domain-Driven Delivery](/Standards/foundations/addd) |
-| Model a business capability | [Model a Domain capability](/Standards/guides/model-domain) |
-| Find an exact convention | [Documentation map](/Standards/doc-map) |
-| Select conditional behavior | [Extension index](/Standards/extensions) |
-| Copy consumer documentation | [Consumer templates](/Standards/templates) |
-| Review baseline decisions | [Decision records](/Standards/reference/decisions) |
+| Model a business capability | [Model a Domain Capability](/Standards/guides/model-domain) |
+| Find an exact convention | [Documentation Map](/Standards/doc-map) |
+| Select conditional behavior | [Extension Index](/Standards/extensions) |
+| Copy consumer documentation | [Consumer Templates](/Standards/templates) |
+| Review baseline decisions | [Decision Records](/Standards/reference/decisions) |
 
-## How each topic works
+## How Each Topic Works
 
 Each convention and extension separates five concerns:
 
@@ -35,7 +35,7 @@ Each convention and extension separates five concerns:
 
 Use the sidebar to browse by ownership area. Press `Ctrl+K` or `Command+K` to search the complete release without sending the query to a third-party service.
 
-## Baseline and extensions
+## Baseline and Extensions
 
 The baseline profile selects the repository, backend, frontend, testing, security, and operating conventions required for version 1. Extensions remain inactive until a current requirement meets their activation criteria and the consumer lists them in `standards.project.json`.
 

@@ -1,7 +1,7 @@
 {
   "title": "Engineering Standards v1",
   "pages": [
-    "---Start here---",
+    "---Start Here---",
     "doc-map",
     "profile/dotnet-nextjs",
     "guides",
@@ -13,12 +13,12 @@
     "conventions/backend",
     "conventions/frontend",
     "conventions/quality",
-    "---Conditional standards---",
+    "---Conditional Standards---",
     "extensions",
     "---Reference---",
     "reference/glossary",
     "reference/decisions",
-    "---Consumer templates---",
+    "---Consumer Templates---",
     "templates",
     "---Release---",
     "roadmap",
