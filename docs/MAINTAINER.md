@@ -5,8 +5,8 @@ served from one Next.js application.
 
 ## Content ownership
 
-The `engineering-standards` submodule is the normative source. It is pinned to
-the released `v1.0.0` commit. Never change files inside the submodule from this
+The `standards` submodule is the normative source. It is pinned to
+the released `v1.15.0` commit. Never change files inside the submodule from this
 repository.
 
 Site-owned content lives in these locations:
@@ -33,7 +33,7 @@ pnpm run content:stage
 
 The staging script performs these operations:
 
-1. Copies `engineering-standards/docs` into `.standards-src`.
+1. Copies `standards/docs` into `.standards-src`.
 2. Adds templates, the roadmap, release notes, and the project configuration
    reference from the v1 release.
 3. Overlays site-owned sidebar metadata and landing copy.
@@ -51,8 +51,8 @@ Version 1 is intentionally pinned. Change it only when a new standards release
 has been accepted for publication.
 
 ```bash
-git -C engineering-standards fetch origin tag v1.0.0 --force
-git -C engineering-standards checkout --detach v1.0.0
+git -C standards fetch origin tag v1.15.0 --force
+git -C standards checkout --detach v1.15.0
 pnpm validate
 ```
 

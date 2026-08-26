@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import standardsManifest from '@/standards/standards.manifest.json';
 import { projects } from '@/lib/projects';
 import { absoluteUrl, marketingRoutes, siteConfig } from '@/lib/site';
 import { standardsTag, standardsVersion } from '@/lib/standards';
@@ -16,8 +17,12 @@ describe('site configuration', () => {
   });
 
   it('pins the released standards baseline', () => {
-    expect(standardsVersion).toBe('1.0.0');
-    expect(standardsTag).toBe('v1.0.0');
+    // The manifest inside the submodule is the authority. Asserting against it
+    // proves the site reads the pinned release rather than a hardcoded string,
+    // and the assertion survives the next standards bump.
+    expect(standardsVersion).toBe(standardsManifest.version);
+    expect(standardsVersion).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(standardsTag).toBe(`v${standardsManifest.version}`);
   });
 
   it('uses secure public project URLs', () => {

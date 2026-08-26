@@ -1,0 +1,18 @@
+.next/
+.source/
+.standards-src/
+.wrangler/
+dist/
+node_modules/
+standards/
+standards-splash/
+test-results/
+public/llms.txt
+public/llms-full.txt
+pnpm-lock.yaml
+tsconfig.tsbuildinfo
+
+# Specification Metadata is a JSON block delimited by '---'. Prettier parses that
+# delimiter as YAML front matter and rewrites the JSON into invalid YAML.
+docs/**/*.md
+next-env.d.ts

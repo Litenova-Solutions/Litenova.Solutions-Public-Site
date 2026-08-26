@@ -1,0 +1,23 @@
+{
+  "title": "Extensions",
+  "defaultOpen": false,
+  "pages": [
+    "README",
+    "audit",
+    "authjs",
+    "bdd",
+    "cache",
+    "compat",
+    "concurrency",
+    "containers",
+    "efcore",
+    "integrations",
+    "jobs",
+    "lifecycle",
+    "locale",
+    "outbox",
+    "realtime",
+    "report",
+    "tenancy"
+  ]
+}

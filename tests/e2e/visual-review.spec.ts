@@ -1,6 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import standardsManifest from '../../standards/standards.manifest.json' with { type: 'json' };
 
 test.describe('visual review artifacts', () => {
   test.skip(
@@ -41,7 +42,9 @@ test.describe('visual review artifacts', () => {
     });
 
     await page.goto('/Standards');
-    await expect(page.getByText('Released Baseline v1.0.0')).toBeVisible();
+    await expect(
+      page.getByText(`Released Baseline v${standardsManifest.version}`),
+    ).toBeVisible();
     await page.screenshot({
       path: path.join(screenshotDirectory, 'standards-mobile.png'),
       fullPage: true,

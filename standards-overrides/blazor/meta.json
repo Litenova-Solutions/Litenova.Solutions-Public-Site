@@ -1,0 +1,12 @@
+{
+  "title": "Blazor Frontend",
+  "defaultOpen": false,
+  "pages": [
+    "structure",
+    "rendering",
+    "components",
+    "data",
+    "browser",
+    "testing"
+  ]
+}

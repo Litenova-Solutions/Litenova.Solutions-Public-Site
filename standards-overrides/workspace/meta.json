@@ -1,0 +1,5 @@
+{
+  "title": "Workspace",
+  "defaultOpen": false,
+  "pages": ["structure", "naming", "dependencies", "config"]
+}

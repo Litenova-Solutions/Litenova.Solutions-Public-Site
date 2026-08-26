@@ -1,30 +1,39 @@
 import { expect, test } from '@playwright/test';
+import standardsManifest from '../../standards/standards.manifest.json' with { type: 'json' };
 
 test('crawl and agent-discovery endpoints publish the complete static site', async ({
   isMobile,
   request,
 }) => {
-  test.skip(Boolean(isMobile), 'One project is sufficient for static endpoint verification.');
+  test.skip(
+    Boolean(isMobile),
+    'One project is sufficient for static endpoint verification.',
+  );
 
   const robotsResponse = await request.get('/robots.txt');
   expect(robotsResponse.ok()).toBe(true);
   const robots = await robotsResponse.text();
   expect(robots).toContain('Allow: /');
-  expect(robots).toContain('Sitemap: https://www.litenova.solutions/sitemap.xml');
+  expect(robots).toContain(
+    'Sitemap: https://www.litenova.solutions/sitemap.xml',
+  );
 
   const sitemapResponse = await request.get('/sitemap.xml');
   expect(sitemapResponse.ok()).toBe(true);
   const sitemap = await sitemapResponse.text();
-  const publicUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
-    (match) => match[1],
-  );
+  const publicUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((match) => match[1])
+    .filter((location): location is string => location !== undefined);
   expect(publicUrls.length).toBeGreaterThanOrEqual(70);
 
   for (const publicUrl of publicUrls) {
     const url = new URL(publicUrl);
     expect(url.origin).toBe('https://www.litenova.solutions');
     const response = await request.get(`${url.pathname}${url.search}`);
-    expect(response.status(), `Expected a successful response for ${url.pathname}`).toBe(200);
+    expect(
+      response.status(),
+      `Expected a successful response for ${url.pathname}`,
+    ).toBe(200);
   }
 
   const manifestResponse = await request.get('/manifest.webmanifest');
@@ -39,10 +48,14 @@ test('crawl and agent-discovery endpoints publish the complete static site', asy
   for (const path of ['/llms.txt', '/llms-full.txt']) {
     const response = await request.get(path);
     expect(response.ok()).toBe(true);
-    expect(await response.text()).toContain('Engineering Standards v1.0.0');
+    expect(await response.text()).toContain(
+      `Engineering Standards v${standardsManifest.version}`,
+    );
   }
 
   const searchResponse = await request.get('/Standards/api/search');
   expect(searchResponse.ok()).toBe(true);
-  expect(searchResponse.headers()['content-type']).toContain('application/json');
+  expect(searchResponse.headers()['content-type']).toContain(
+    'application/json',
+  );
 });

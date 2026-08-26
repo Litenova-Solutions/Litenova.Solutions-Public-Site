@@ -22,11 +22,7 @@ export const siteConfig = {
   linkedin: 'https://www.linkedin.com/company/litenova/',
 } as const;
 
-export const marketingRoutes = [
-  '/',
-  '/privacy',
-  '/accessibility',
-] as const;
+export const marketingRoutes = ['/', '/privacy', '/accessibility'] as const;
 
 export function absoluteUrl(path = '/') {
   return new URL(path, siteConfig.url).toString();

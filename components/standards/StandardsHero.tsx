@@ -1,20 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { standardsTag } from '@/lib/standards';
+import { Button } from '@/components/ui/button';
+import { standardsRepository, standardsTag } from '@/lib/standards';
 
 export function StandardsHero() {
   return (
     <section
       aria-labelledby="standards-title"
-      className="relative overflow-hidden border-b border-litenova-border bg-litenova-dark"
+      className="relative overflow-hidden border-b border-border bg-background"
     >
       <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255, 206, 99, 0.12) 0%, transparent 70%)',
-        }}
+        className="page-hero-glow pointer-events-none absolute inset-0"
+        aria-hidden="true"
       />
       <div className="relative mx-auto max-w-4xl px-4 py-14 text-center sm:px-6 sm:py-16 lg:px-8">
         <Image
@@ -25,40 +22,43 @@ export function StandardsHero() {
           className="mx-auto mb-5"
           priority
         />
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-litenova-gold">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-eyebrow text-primary">
           Released Baseline {standardsTag}
         </p>
         <h1
           id="standards-title"
-          className="mb-4 text-4xl font-bold tracking-tight text-white sm:text-5xl"
+          className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
         >
           Engineering Standards
         </h1>
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-400">
+        <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
           One pinned baseline for a bounded-context ASP.NET Core, PostgreSQL,
-          Marten, and optional Next.js application.
+          and Marten application, with a Next.js or Blazor frontend.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/Standards/guides/adopt-v1"
-            className="rounded-md bg-litenova-gold px-5 py-2.5 text-sm font-semibold text-litenova-dark transition hover:opacity-90"
-          >
-            Adopt Version 1
-          </Link>
-          <Link
-            href="/Standards/doc-map"
-            className="rounded-md border border-litenova-border px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-litenova-gold/30 hover:text-litenova-gold"
+          <Button size="lg" render={<Link href="/Standards/guide/getting-started" />}>
+            Getting Started
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            render={<Link href="/Standards/doc-map" />}
           >
             Documentation Map
-          </Link>
-          <a
-            href="https://github.com/Litenova-Solutions/Engineering-Standards"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-md border border-litenova-border px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-litenova-gold/30 hover:text-litenova-gold"
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            render={
+              <a
+                href={standardsRepository}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
           >
             GitHub
-          </a>
+          </Button>
         </div>
       </div>
     </section>

@@ -54,13 +54,36 @@ export default function OpenGraphImage() {
         >
           LN
         </div>
-        <div style={{ color: '#ffce63', display: 'flex', fontSize: 26, fontWeight: 700, marginTop: 34 }}>
+        <div
+          style={{
+            color: '#ffce63',
+            display: 'flex',
+            fontSize: 26,
+            fontWeight: 700,
+            marginTop: 34,
+          }}
+        >
           LITENOVA SOLUTIONS
         </div>
-        <div style={{ display: 'flex', fontSize: 58, fontWeight: 750, letterSpacing: -2, marginTop: 18 }}>
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 58,
+            fontWeight: 750,
+            letterSpacing: -2,
+            marginTop: 18,
+          }}
+        >
           Software Systems and Engineering Tools
         </div>
-        <div style={{ color: '#b8bcc5', display: 'flex', fontSize: 25, marginTop: 22 }}>
+        <div
+          style={{
+            color: '#b8bcc5',
+            display: 'flex',
+            fontSize: 25,
+            marginTop: 22,
+          }}
+        >
           Software products | Engineering services | Engineering Standards v1
         </div>
       </div>

@@ -41,7 +41,7 @@ export default function StandardsHomePage() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="min-h-screen bg-litenova-dark text-gray-100 [grid-area:main]"
+        className="docs-main-area min-h-screen bg-background text-foreground"
       >
         <StandardsHero />
         <StandardsHomeBody />

@@ -8,12 +8,12 @@ security issues through [SECURITY.md](SECURITY.md), not a public issue.
 
 ## Choose the correct repository
 
-| Change | Repository |
-| --- | --- |
-| Next.js routes, company copy, theme, navigation, staging, SEO, or tests | This repository |
-| Normative standards, guides, decisions, templates, or release manifest | [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) |
+| Change                                                                  | Repository                                                                           |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Next.js routes, company copy, theme, navigation, staging, SEO, or tests | This repository                                                                      |
+| Normative standards, guides, decisions, templates, or release manifest  | [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) |
 
-Do not make long-lived edits inside `engineering-standards`. It is a Git
+Do not make long-lived edits inside `standards`. It is a Git
 submodule pinned to the published v1 release.
 
 ## Prerequisites

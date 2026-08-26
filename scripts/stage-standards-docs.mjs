@@ -5,15 +5,17 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const standardsRoot = path.join(root, 'engineering-standards');
+const standardsRoot = path.join(root, 'standards');
 const docsSource = path.join(standardsRoot, 'docs');
-const templatesSource = path.join(standardsRoot, 'templates', 'docs');
+const templatesSource = path.join(standardsRoot, 'templates', 'consumer');
 const overridesSource = path.join(root, 'standards-overrides');
 const stageDirectory = path.join(root, '.standards-src');
 const splashDirectory = path.join(root, 'standards-splash');
 const publicDirectory = path.join(root, 'public');
 const standardsPrefix = '/Standards';
 const siteUrl = 'https://www.litenova.solutions';
+const standardsRepository =
+  'https://github.com/Litenova-Solutions/Engineering-Standards';
 
 function removeDirectory(directory) {
   if (fs.existsSync(directory)) {
@@ -95,7 +97,9 @@ function truncateDescription(value, maximumLength = 158) {
 }
 
 function extractDescription(body) {
-  const intent = body.match(/(?:^|\n)## Intent\s*\n+([\s\S]*?)(?=\n## |$)/i)?.[1];
+  const intent = body.match(
+    /(?:^|\n)## Intent\s*\n+([\s\S]*?)(?=\n## |$)/i,
+  )?.[1];
   const candidates = (intent ?? body).split(/\n\s*\n/);
 
   for (const candidate of candidates) {
@@ -124,16 +128,14 @@ function addMetadata(text) {
 
   if (!title && !heading) return text;
 
-  const metadata = frontmatter && !hasJsonFrontmatter ? frontmatter.split('\n') : [];
+  const metadata =
+    frontmatter && !hasJsonFrontmatter ? frontmatter.split('\n') : [];
   if (!title && heading) metadata.unshift(`title: ${JSON.stringify(heading)}`);
   if (!description && inferredDescription) {
     metadata.push(`description: ${JSON.stringify(inferredDescription)}`);
   }
 
-  const bodyWithoutDuplicateTitle = body.replace(
-    /^\s*#\s+.+\n(?:\s*\n)?/,
-    '',
-  );
+  const bodyWithoutDuplicateTitle = body.replace(/^\s*#\s+.+\n(?:\s*\n)?/, '');
   const templateMetadata = hasJsonFrontmatter
     ? `## Template metadata\n\n\`\`\`json\n${frontmatter.trim()}\n\`\`\`\n\n`
     : '';
@@ -162,7 +164,7 @@ function normalizeSourcePath(rawPath, currentRelativePath) {
   if (/^(\.\.\/)+ROADMAP\.md$/i.test(resolved)) return 'roadmap.md';
   if (/^(\.\.\/)+CHANGELOG\.md$/i.test(resolved)) return 'release-notes.md';
 
-  resolved = resolved.replace(/^(\.\.\/)+templates\/docs\//i, 'templates/');
+  resolved = resolved.replace(/^(\.\.\/)+templates\/consumer\//i, 'templates/');
   resolved = resolved.replace(/^(\.\.\/)+docs\//i, '');
 
   return resolved;
@@ -179,7 +181,8 @@ function rewriteMarkdownLinks(text, currentRelativePath) {
     }
 
     const hashIndex = trimmedTarget.indexOf('#');
-    const rawPath = hashIndex >= 0 ? trimmedTarget.slice(0, hashIndex) : trimmedTarget;
+    const rawPath =
+      hashIndex >= 0 ? trimmedTarget.slice(0, hashIndex) : trimmedTarget;
     const hash = hashIndex >= 0 ? trimmedTarget.slice(hashIndex) : '';
 
     if (!rawPath) return match;
@@ -188,6 +191,22 @@ function rewriteMarkdownLinks(text, currentRelativePath) {
     if (rawPath.startsWith('/') && !rawPath.startsWith('/docs/')) return match;
 
     const normalizedPath = normalizeSourcePath(rawPath, currentRelativePath);
+
+    // A link that still escapes the staged docs tree targets repository material
+    // that this site does not publish, such as the reference validators. Point it
+    // at the pinned source tag instead of emitting an unresolvable route.
+    if (normalizedPath.startsWith('../')) {
+      let repositoryPath = normalizedPath;
+      while (repositoryPath.startsWith('../'))
+        repositoryPath = repositoryPath.slice(3);
+      const sourceLink =
+        standardsRepository +
+        '/blob/v' +
+        manifest.version +
+        '/' +
+        repositoryPath;
+      return '[' + label + '](' + sourceLink + hash + ')';
+    }
     if (!/\.mdx?$/i.test(normalizedPath)) return match;
 
     return `[${label}](${routeForMarkdown(normalizedPath)}${hash})`;
@@ -196,7 +215,9 @@ function rewriteMarkdownLinks(text, currentRelativePath) {
 
 function transformMarkdown(relativePath, text) {
   const normalized = text.replace(/\r\n/g, '\n');
-  return rewriteMarkdownLinks(addMetadata(normalized), relativePath).trimEnd() + '\n';
+  return (
+    rewriteMarkdownLinks(addMetadata(normalized), relativePath).trimEnd() + '\n'
+  );
 }
 
 function createJsonTemplatePage() {
@@ -280,7 +301,9 @@ function validateInternalRoutes() {
 
   for (const file of files) {
     const text = fs.readFileSync(file.fullPath, 'utf8');
-    const links = text.matchAll(/\[[^\]]*]\((\/Standards[^)#\s]*)(?:#[^)]*)?\)/g);
+    const links = text.matchAll(
+      /\[[^\]]*]\((\/Standards[^)#\s]*)(?:#[^)]*)?\)/g,
+    );
 
     for (const match of links) {
       const route = match[1].replace(/\/$/, '') || standardsPrefix;
@@ -297,13 +320,18 @@ function validateInternalRoutes() {
 
 function forLlmText(text) {
   const { frontmatter, body } = splitFrontmatter(text);
-  const title = frontmatter.match(/^title:\s*(.+)$/m)?.[1]?.replace(/^['"]|['"]$/g, '');
+  const title = frontmatter
+    .match(/^title:\s*(.+)$/m)?.[1]
+    ?.replace(/^['"]|['"]$/g, '');
   return `${title ? `# ${title}\n\n` : ''}${body.trim()}`;
 }
 
 function writeLlmFiles() {
   const manifest = JSON.parse(
-    fs.readFileSync(path.join(standardsRoot, 'standards.manifest.json'), 'utf8'),
+    fs.readFileSync(
+      path.join(standardsRoot, 'standards.manifest.json'),
+      'utf8',
+    ),
   );
   const markdownFiles = listMarkdownFiles(stageDirectory).sort();
   const indexLines = [
@@ -343,7 +371,11 @@ function writeLlmFiles() {
   ];
 
   fs.mkdirSync(publicDirectory, { recursive: true });
-  fs.writeFileSync(path.join(publicDirectory, 'llms.txt'), indexLines.join('\n'), 'utf8');
+  fs.writeFileSync(
+    path.join(publicDirectory, 'llms.txt'),
+    indexLines.join('\n'),
+    'utf8',
+  );
   fs.writeFileSync(
     path.join(publicDirectory, 'llms-full.txt'),
     fullText.join('\n'),

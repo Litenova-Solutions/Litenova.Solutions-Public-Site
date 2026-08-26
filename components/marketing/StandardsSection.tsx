@@ -1,42 +1,52 @@
 import Link from 'next/link';
-import { ExternalLinkIcon, BookIcon } from '@/components/ui/Icons';
-import { standardsTag } from '@/lib/standards';
+import { BookOpen, ExternalLink } from 'lucide-react';
+import {
+  Section,
+  SectionContainer,
+  SectionHeading,
+} from '@/components/marketing/Section';
+import { Button } from '@/components/ui/button';
+import { standardsRepository, standardsTag } from '@/lib/standards';
 
 export function StandardsSection() {
   return (
-    <section
+    <Section
       id="standards"
       aria-labelledby="standards-section-title"
-      className="section dot-grid"
+      className="dot-grid"
     >
-      <div className="section-container">
-        <div className="section-heading">
-          <p className="eyebrow">Version {standardsTag}</p>
-          <h2
-            id="standards-section-title"
+      <SectionContainer>
+        <SectionHeading
+          titleId="standards-section-title"
+          title={`Engineering Standards ${standardsTag}`}
+          eyebrow="Published Baseline"
+        >
+          The published baseline defines workspace structure, .NET and Next.js
+          conventions, controlled UI governance, testing requirements, security
+          controls, and release evidence for one bounded-context application.
+        </SectionHeading>
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Button size="lg" render={<Link href="/Standards" />}>
+            <BookOpen />
+            Read Engineering Standards
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            render={
+              <a
+                href={`${standardsRepository}/tree/${standardsTag}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              />
+            }
           >
-            Engineering Standards v1
-          </h2>
-          <p>
-            The published baseline defines repository structure, .NET and
-            Next.js conventions, testing requirements, security controls, and
-            release evidence for one bounded-context application.
-          </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/Standards" className="button button-primary">
-              <BookIcon className="size-4" />
-              Read Engineering Standards
-            </Link>
-            <a
-              href="https://github.com/Litenova-Solutions/Engineering-Standards/tree/v1.0.0"
-              className="button button-quiet"
-            >
-              Source Repository
-              <ExternalLinkIcon className="size-4" />
-            </a>
-          </div>
+            Source Repository
+            <ExternalLink />
+          </Button>
         </div>
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   );
 }

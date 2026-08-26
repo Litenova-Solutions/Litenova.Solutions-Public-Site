@@ -1,39 +1,40 @@
-import { MailIcon, PhoneIcon } from '@/components/ui/Icons';
+import { Mail, Phone } from 'lucide-react';
+import {
+  Section,
+  SectionContainer,
+  SectionHeading,
+} from '@/components/marketing/Section';
+import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/lib/site';
 
 export function ContactSection() {
   return (
-    <section
+    <Section
       id="contact"
       aria-labelledby="contact-title"
-      className="section border-t border-litenova-border bg-litenova-surface"
+      className="border-t border-border bg-card"
     >
-      <div className="section-container">
-        <div className="section-heading">
-          <h2
-            id="contact-title"
+      <SectionContainer>
+        <SectionHeading titleId="contact-title" title="Contact">
+          For software engineering enquiries, contact Litenova Solutions by
+          email or phone. Communication is in English.
+        </SectionHeading>
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Button size="lg" render={<a href={`mailto:${siteConfig.email}`} />}>
+            <Mail />
+            {siteConfig.email}
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            render={<a href={siteConfig.phone.href} />}
           >
-            Contact
-          </h2>
-          <p>
-            For software engineering enquiries, contact Litenova Solutions by
-            email or phone. Communication is in English.
-          </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="button button-primary"
-            >
-              <MailIcon className="size-4" />
-              {siteConfig.email}
-            </a>
-            <a href={siteConfig.phone.href} className="button button-quiet">
-              <PhoneIcon className="size-4" />
-              {siteConfig.phone.display}
-            </a>
-          </div>
+            <Phone />
+            {siteConfig.phone.display}
+          </Button>
         </div>
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   );
 }

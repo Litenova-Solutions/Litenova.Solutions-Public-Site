@@ -1,5 +1,5 @@
 {
   "title": "Quality and Operations",
   "defaultOpen": false,
-  "pages": ["backend-testing", "security", "operations", "ci"]
+  "pages": ["security", "operations", "ci"]
 }

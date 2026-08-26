@@ -1,5 +1,0 @@
-{
-  "title": "Frontend Conventions",
-  "defaultOpen": false,
-  "pages": ["structure", "rendering", "components", "data-and-state", "testing"]
-}

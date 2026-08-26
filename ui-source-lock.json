@@ -1,0 +1,62 @@
+{
+  "$schema": "./standards/schemas/ui-source-lock.schema.json",
+  "schemaVersion": 1,
+  "generator": "shadcn/ui",
+  "cli": "4.16.2",
+  "preset": {
+    "code": "bIkf1RQ",
+    "fingerprint": "sha256:87311f8e21348d5c467843284cbf4bbb75a34d383c6ed900c0c8e5c2539eadb0",
+    "style": "vega",
+    "base": "base-ui",
+    "cssVariables": true,
+    "baseColor": "neutral",
+    "theme": "neutral",
+    "chartColor": "neutral",
+    "font": "geist",
+    "fontHeading": "inherit",
+    "icons": "lucide",
+    "radius": "default",
+    "menuAccent": "subtle",
+    "menuColor": "default",
+    "componentsStyle": "base-vega"
+  },
+  "registry": {
+    "name": "shadcn",
+    "url": "https://ui.shadcn.com"
+  },
+  "formatter": "pnpm exec prettier --write",
+  "components": [
+    {
+      "name": "button",
+      "address": "@shadcn/button",
+      "status": "baseline",
+      "paths": ["components/ui/button.tsx"],
+      "digest": "sha256:9ceea712ffea8be2e6e75f561750950a589c064b17467b8718672f2799106337",
+      "dependencies": ["@base-ui/react", "class-variance-authority"]
+    },
+    {
+      "name": "card",
+      "address": "@shadcn/card",
+      "status": "baseline",
+      "paths": ["components/ui/card.tsx"],
+      "digest": "sha256:084596f15a48dab3b0fb29be1db57cf1ec246e0b2a757245b8165c6aaf1334a7",
+      "dependencies": []
+    },
+    {
+      "name": "badge",
+      "address": "@shadcn/badge",
+      "status": "baseline",
+      "paths": ["components/ui/badge.tsx"],
+      "digest": "sha256:5706189b86e8670499fb33f37147dd6f65c39d59eef5211e34157f2952c35e32",
+      "dependencies": ["@base-ui/react", "class-variance-authority"]
+    },
+    {
+      "name": "separator",
+      "address": "@shadcn/separator",
+      "status": "baseline",
+      "paths": ["components/ui/separator.tsx"],
+      "digest": "sha256:92ad5065f03d7edc98f367e729f3ec84ece1d99ee8cd0d3a8137f266d4ab3d8a",
+      "dependencies": ["@base-ui/react"]
+    }
+  ]
+}

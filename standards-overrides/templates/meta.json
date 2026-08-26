@@ -7,12 +7,21 @@
     "project-agents",
     "product-brief",
     "domain-index",
-    "capability",
+    "section-index",
+    "modules-index",
+    "module",
+    "aggregate",
     "use-case",
+    "domain-policy",
+    "end-to-end-flow",
+    "workflow",
     "page",
     "glossary",
     "decision",
+    "decision-evidence",
+    "ui-override-decision",
+    "operating-limits",
     "runbook",
-    "release-evidence"
+    "release-record"
   ]
 }

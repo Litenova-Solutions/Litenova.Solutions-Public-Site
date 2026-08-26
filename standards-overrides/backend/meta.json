@@ -1,0 +1,12 @@
+{
+  "title": "Backend",
+  "defaultOpen": false,
+  "pages": [
+    "architecture",
+    "domain",
+    "application",
+    "persistence",
+    "api",
+    "testing"
+  ]
+}

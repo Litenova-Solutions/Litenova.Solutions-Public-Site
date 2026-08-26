@@ -1,4 +1,12 @@
-import { ExternalLinkIcon } from '@/components/ui/Icons';
+import { ExternalLink } from 'lucide-react';
+import {
+  BrandTile,
+  Section,
+  SectionContainer,
+  SectionHeading,
+} from '@/components/marketing/Section';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { projects, type Project } from '@/lib/projects';
 
 function ProductMark({ product }: { product: Project['slug'] }) {
@@ -89,12 +97,9 @@ function ProductBadges({ project }: { project: Project }) {
       {[project.category, project.license, project.status]
         .filter((badge): badge is string => Boolean(badge))
         .map((badge) => (
-          <span
-            key={badge}
-            className="rounded-full border border-litenova-border bg-black/20 px-2.5 py-1 text-xs text-gray-300"
-          >
+          <Badge key={badge} variant="outline">
             {badge}
-          </span>
+          </Badge>
         ))}
     </div>
   );
@@ -102,66 +107,65 @@ function ProductBadges({ project }: { project: Project }) {
 
 export function ProductsSection() {
   return (
-    <section
+    <Section
       id="products"
       aria-labelledby="products-title"
-      className="section dot-grid"
+      className="dot-grid"
     >
-      <div className="section-container">
-        <div className="section-heading">
-          <h2 id="products-title">Products</h2>
-          <p>
-            Software products and engineering tools maintained by Litenova
-            Solutions.
-          </p>
-        </div>
+      <SectionContainer>
+        <SectionHeading titleId="products-title" title="Products">
+          Software products and engineering tools maintained by Litenova
+          Solutions.
+        </SectionHeading>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {projects.map((project) => (
-            <article key={project.name} className="card flex flex-col">
-              <div className="flex items-center gap-4">
-                <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-litenova-gold/20 bg-litenova-gold/8 text-litenova-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                  <ProductMark product={project.slug} />
+            <Card key={project.name} className="h-full">
+              <CardContent className="flex h-full flex-col">
+                <div className="flex items-center gap-4">
+                  <BrandTile className="size-14 shrink-0 rounded-xl inset-shadow-2xs">
+                    <ProductMark product={project.slug} />
+                  </BrandTile>
+                  <h3 className="text-xl font-semibold text-foreground">
+                    {project.name}
+                  </h3>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-100">
-                  {project.name}
-                </h3>
-              </div>
 
-              <ProductBadges project={project} />
+                <ProductBadges project={project} />
 
-              <p className="mt-5 flex-1 text-sm leading-7 text-gray-400">
-                {project.description}
-              </p>
+                <p className="mt-5 flex-1 text-sm leading-7 text-muted-foreground">
+                  {project.description}
+                </p>
 
-              <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-                {project.website ? (
-                  <a
-                    href={project.website}
-                    className="text-link"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Product Website
-                    <ExternalLinkIcon className="size-4" />
-                  </a>
-                ) : null}
-                {project.repository ? (
-                  <a
-                    href={project.repository}
-                    className="text-link"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Source Repository
-                    <ExternalLinkIcon className="size-4" />
-                  </a>
-                ) : null}
-              </div>
-            </article>
+                <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+                  {project.website ? (
+                    <a
+                      href={project.website}
+                      className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Product Website
+                      <ExternalLink className="size-4" />
+                    </a>
+                  ) : null}
+                  {project.repository ? (
+                    <a
+                      href={project.repository}
+                      className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Source Repository
+                      <ExternalLink className="size-4" />
+                    </a>
+                  ) : null}
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   );
 }

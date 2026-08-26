@@ -1,4 +1,4 @@
-import manifest from '@/engineering-standards/standards.manifest.json';
+import manifest from '@/standards/standards.manifest.json';
 
 export const standardsVersion = manifest.version;
 export const standardsTag = `v${standardsVersion}`;
@@ -10,10 +10,10 @@ export function standardsSourcePath(pagePath: string) {
   if (pagePath === 'roadmap.md') return 'ROADMAP.md';
   if (pagePath === 'release-notes.md') return 'CHANGELOG.md';
   if (pagePath === 'templates/standards-project-json.md') {
-    return 'templates/docs/standards.project.json';
+    return 'templates/consumer/standards.project.json';
   }
   if (pagePath.startsWith('templates/')) {
-    return pagePath.replace(/^templates\//, 'templates/docs/');
+    return pagePath.replace(/^templates\//, 'templates/consumer/');
   }
 
   return `docs/${pagePath}`;

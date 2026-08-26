@@ -1,5 +1,0 @@
-{
-  "title": "Backend Conventions",
-  "defaultOpen": false,
-  "pages": ["architecture", "domain", "application", "persistence-marten", "api"]
-}

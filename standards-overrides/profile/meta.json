@@ -1,0 +1,5 @@
+{
+  "title": "Platform Profiles",
+  "defaultOpen": true,
+  "pages": ["nextjs", "blazor"]
+}

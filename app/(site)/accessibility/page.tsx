@@ -28,9 +28,11 @@ export default function AccessibilityPage() {
           description={description}
         />
 
-        <div className="section bg-litenova-dark">
-          <article className="legal-content section-container max-w-3xl">
-            <p className="text-sm text-gray-400">Last Reviewed: 16 July 2026</p>
+        <div className="bg-background py-20">
+          <article className="mx-auto legal-prose w-full max-w-3xl px-4 sm:px-6 lg:px-8">
+            <p className="text-sm text-muted-foreground">
+              Last Reviewed: 16 July 2026
+            </p>
 
             <section aria-labelledby="accessibility-target">
               <h2 id="accessibility-target">Our Target</h2>
@@ -47,12 +49,22 @@ export default function AccessibilityPage() {
               <h2 id="accessibility-measures">Measures in Place</h2>
               <ul>
                 <li>Semantic landmarks, headings, labels, and link text.</li>
-                <li>A keyboard-accessible skip link and visible focus states.</li>
-                <li>Responsive navigation that works with keyboard controls.</li>
-                <li>Text and interface contrast reviewed for level AA targets.</li>
+                <li>
+                  A keyboard-accessible skip link and visible focus states.
+                </li>
+                <li>
+                  Responsive navigation that works with keyboard controls.
+                </li>
+                <li>
+                  Text and interface contrast reviewed for level AA targets.
+                </li>
                 <li>Reduced-motion support for people who request it.</li>
-                <li>Automated accessibility checks on primary page journeys.</li>
-                <li>Documentation search and navigation with accessible names.</li>
+                <li>
+                  Automated accessibility checks on primary page journeys.
+                </li>
+                <li>
+                  Documentation search and navigation with accessible names.
+                </li>
               </ul>
             </section>
 
@@ -71,12 +83,15 @@ export default function AccessibilityPage() {
               <h2 id="accessibility-feedback">Report a Barrier</h2>
               <p>
                 If any part of the website is difficult to use, email{' '}
-                <a href={`mailto:${siteConfig.email}?subject=Website%20accessibility`}>
+                <a
+                  href={`mailto:${siteConfig.email}?subject=Website%20accessibility`}
+                >
                   {siteConfig.email}
                 </a>
                 . Include the page address, what you were trying to do, and the
                 browser or assistive technology involved if you can. You can
-                also call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a>.
+                also call{' '}
+                <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a>.
                 We will acknowledge the report and provide the information in an
                 accessible alternative where possible.
               </p>

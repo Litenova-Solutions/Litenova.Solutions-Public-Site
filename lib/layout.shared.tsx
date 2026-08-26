@@ -1,13 +1,16 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { ExternalLinkIcon } from '@/components/ui/Icons';
+import { ExternalLink } from 'lucide-react';
+import { standardsRepository, standardsTag } from '@/lib/standards';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: (
         <>
-          <span className="hidden sm:inline">Engineering Standards v1</span>
-          <span className="sm:hidden">Standards v1</span>
+          <span className="hidden sm:inline">
+            Engineering Standards {standardsTag}
+          </span>
+          <span className="sm:hidden">Standards {standardsTag}</span>
         </>
       ),
       url: '/Standards',
@@ -23,9 +26,9 @@ export function baseOptions(): BaseLayoutProps {
         type: 'icon',
         text: 'GitHub',
         label: 'GitHub',
-        url: 'https://github.com/Litenova-Solutions/Engineering-Standards',
+        url: standardsRepository,
         external: true,
-        icon: <ExternalLinkIcon />,
+        icon: <ExternalLink />,
       },
     ],
     themeSwitch: { enabled: false },

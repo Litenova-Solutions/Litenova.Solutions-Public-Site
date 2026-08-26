@@ -38,8 +38,8 @@ const sections = [
       <>
         <p>
           This website has no account system, advertising, analytics tracker,
-          newsletter form, or contact form. We do not set optional cookies.
-          The hosting platform may process technical request data, such as an IP
+          newsletter form, or contact form. We do not set optional cookies. The
+          hosting platform may process technical request data, such as an IP
           address, user agent, requested URL, timestamp, and security events, to
           deliver and protect the website.
         </p>
@@ -61,8 +61,8 @@ const sections = [
           legitimate interests in publishing and protecting this service.
         </li>
         <li>
-          Enquiries and proposal discussions are processed to take steps at
-          your request before entering into a contract, or under our legitimate
+          Enquiries and proposal discussions are processed to take steps at your
+          request before entering into a contract, or under our legitimate
           interest in responding to business communications.
         </li>
         <li>
@@ -80,11 +80,16 @@ const sections = [
         and subprocessors in several countries. Where required, transfers
         outside the European Economic Area are covered by appropriate
         safeguards. See the{' '}
-        <a href="https://www.cloudflare.com/policies/privacy/">Cloudflare Privacy Policy</a>{' '}
-        and <a href="https://www.cloudflare.com/en-gb/cloudflare-customer-dpa/">Cloudflare Data Processing Addendum</a>{' '}
+        <a href="https://www.cloudflare.com/policies/privacy/">
+          Cloudflare Privacy Policy
+        </a>{' '}
+        and{' '}
+        <a href="https://www.cloudflare.com/en-gb/cloudflare-customer-dpa/">
+          Cloudflare Data Processing Addendum
+        </a>{' '}
         for details. We may also use communication, administration, and
-        professional service providers when necessary for the purposes above.
-        We do not sell personal data.
+        professional service providers when necessary for the purposes above. We
+        do not sell personal data.
       </p>
     ),
   },
@@ -105,11 +110,11 @@ const sections = [
     title: 'Your Rights',
     content: (
       <p>
-        Subject to the conditions in the General Data Protection Regulation,
-        you may request access, correction, deletion, restriction, data
-        portability, or object to processing. You may also withdraw consent
-        where consent is the basis. Contact us to make a request. You can lodge
-        a complaint with the{' '}
+        Subject to the conditions in the General Data Protection Regulation, you
+        may request access, correction, deletion, restriction, data portability,
+        or object to processing. You may also withdraw consent where consent is
+        the basis. Contact us to make a request. You can lodge a complaint with
+        the{' '}
         <a href="https://www.autoriteitpersoonsgegevens.nl/en/node/4316">
           Dutch Data Protection Authority
         </a>
@@ -139,12 +144,19 @@ export default function PrivacyPage() {
           description={description}
         />
 
-        <div className="section bg-litenova-dark">
-          <article className="legal-content section-container max-w-3xl">
-            <p className="text-sm text-gray-400">Last Updated: 26 August 2026</p>
+        <div className="bg-background py-20">
+          <article className="mx-auto legal-prose w-full max-w-3xl px-4 sm:px-6 lg:px-8">
+            <p className="text-sm text-muted-foreground">
+              Last Updated: 26 August 2026
+            </p>
             {sections.map((section) => (
-              <section key={section.title} aria-labelledby={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>
-                <h2 id={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>
+              <section
+                key={section.title}
+                aria-labelledby={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}
+              >
+                <h2
+                  id={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}
+                >
                   {section.title}
                 </h2>
                 <div>{section.content}</div>

@@ -9,12 +9,12 @@ export default defineConfig({
     ...fumadocsMdx(),
     vinext({
       cache: { cdn: cdnAdapter() },
-      prerender: { routes: "*" },
+      prerender: { routes: '*' },
     }),
     cloudflare({
       viteEnvironment: {
-        name: "rsc",
-        childEnvironments: ["ssr"],
+        name: 'rsc',
+        childEnvironments: ['ssr'],
       },
     }),
   ],

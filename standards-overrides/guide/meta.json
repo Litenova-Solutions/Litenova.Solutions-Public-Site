@@ -1,0 +1,5 @@
+{
+  "title": "Guides",
+  "defaultOpen": true,
+  "pages": ["getting-started", "model-domain", "audit-trail"]
+}

@@ -298,6 +298,9 @@ test-results/
 coverage/
 *.tsbuildinfo
 
+# Local Fuse codebase index cache.
+.fuse/
+
 # Environment
 .env
 .env.*
