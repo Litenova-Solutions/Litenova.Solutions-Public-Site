@@ -1,7 +1,7 @@
 # Litenova Solutions Public Site Agent Protocol
 
 Read this file before changing the company site or its Engineering Standards presentation.
-The repository publishes one Next.js application through Vercel. It contains a single company
+The repository publishes one Next.js application through Cloudflare Workers. It contains a single company
 landing page and the released Engineering Standards documentation rendered with Fumadocs.
 
 ## Product and Source Boundaries
@@ -112,7 +112,7 @@ absence of horizontal overflow.
 
 - Report the exact checks and outcomes.
 - Include desktop and mobile screenshots for a pull request that changes presentation.
-- Keep the Vercel preview available for review before merging to `main`.
+- Keep the Cloudflare Workers preview available for review before merging to `main`.
 - Leave no placeholder copy, unfinished-work marker, disabled verification, or untracked
   generated output.
 - Update `README.md` or `docs/MAINTAINER.md` when the setup, release, content ownership, or

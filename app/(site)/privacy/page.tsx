@@ -76,12 +76,12 @@ const sections = [
     title: 'Service Providers and International Processing',
     content: (
       <p>
-        The website is hosted by Vercel. Vercel may use infrastructure and
-        subprocessors in several countries. Where required, transfers outside
-        the European Economic Area are covered by appropriate safeguards. See
-        the{' '}
-        <a href="https://vercel.com/legal/privacy-notice">Vercel Privacy Notice</a>{' '}
-        and <a href="https://vercel.com/legal/dpa">Vercel Data Processing Addendum</a>{' '}
+        The website is hosted by Cloudflare. Cloudflare may use infrastructure
+        and subprocessors in several countries. Where required, transfers
+        outside the European Economic Area are covered by appropriate
+        safeguards. See the{' '}
+        <a href="https://www.cloudflare.com/policies/privacy/">Cloudflare Privacy Policy</a>{' '}
+        and <a href="https://www.cloudflare.com/en-gb/cloudflare-customer-dpa/">Cloudflare Data Processing Addendum</a>{' '}
         for details. We may also use communication, administration, and
         professional service providers when necessary for the purposes above.
         We do not sell personal data.
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
 
         <div className="section bg-litenova-dark">
           <article className="legal-content section-container max-w-3xl">
-            <p className="text-sm text-gray-400">Last Updated: 16 July 2026</p>
+            <p className="text-sm text-gray-400">Last Updated: 26 August 2026</p>
             {sections.map((section) => (
               <section key={section.title} aria-labelledby={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>
                 <h2 id={`privacy-${section.title.toLowerCase().replaceAll(' ', '-')}`}>

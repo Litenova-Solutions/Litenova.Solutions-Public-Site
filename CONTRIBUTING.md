@@ -77,7 +77,7 @@ A pull request should include:
 - Screenshots for visual changes at desktop and narrow widths.
 - Exact verification commands and results.
 - Accessibility and search implications for public-page changes.
-- A Vercel preview URL when the Git integration creates one.
+- A Cloudflare Workers preview URL when Workers Builds creates one.
 - An explicit note for schema, dependency, hosting, or standards-pin changes.
 
 Open a [GitHub issue](https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/issues)

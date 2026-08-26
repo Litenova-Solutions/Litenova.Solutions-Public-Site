@@ -15,7 +15,7 @@
   <a href="https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/actions/workflows/ci.yml"><img src="https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status"></a>
   <a href="https://www.litenova.solutions"><img src="https://img.shields.io/badge/site-www.litenova.solutions-f8c258?style=flat-square" alt="Live site"></a>
   <a href="https://www.litenova.solutions/Standards"><img src="https://img.shields.io/badge/Engineering_Standards-v1.0.0-f8c258?style=flat-square" alt="Engineering Standards v1.0.0"></a>
-  <a href="https://vercel.com/litenova-solutions/litenova-solutions-public-site"><img src="https://img.shields.io/badge/deployment-Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Deployed on Vercel"></a>
+  <a href="https://developers.cloudflare.com/workers/"><img src="https://img.shields.io/badge/deployment-Cloudflare_Workers-f38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Deployed on Cloudflare Workers"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/Litenova-Solutions/Litenova.Solutions-Public-Site?style=flat-square" alt="MIT License"></a>
 </p>
 
@@ -53,7 +53,7 @@ flowchart LR
     Landing[Company landing page] --> App[Next.js application]
     Docs --> App
     App --> Discovery[Sitemap, robots, metadata, and LLM indexes]
-    App --> Vercel[Vercel deployment]
+    App --> Workers[Cloudflare Workers deployment]
 ```
 
 Normative content comes from the
@@ -77,7 +77,9 @@ Generated content is not committed.
 | TypeScript | 6.0.3, strict type checking |
 | Vitest | Unit tests |
 | Playwright and axe-core | Browser journeys and accessibility checks |
-| Vercel | Preview and production hosting |
+| vinext | Cloudflare Workers adapter for Next.js |
+| Wrangler | Worker configuration, validation, and deployment |
+| Cloudflare Workers | Preview and production hosting |
 
 The preferred runtime is Node.js 24.16.0, recorded in `.node-version`. The package accepts Node.js
 24 patch releases from 24.11.0 and uses pnpm 11.13.1 through Corepack.
@@ -130,6 +132,11 @@ documentation. Open documentation search from the Fumadocs navigation or with `C
 | `pnpm test` | Run unit tests with Vitest |
 | `pnpm validate` | Validate the release pin, content, metadata, and source rules |
 | `pnpm build` | Stage content and create the production Next.js build |
+| `pnpm run check:vinext` | Check Next.js compatibility with vinext |
+| `pnpm run build:vinext` | Stage content and build the Cloudflare Worker |
+| `pnpm run start:vinext` | Run the built Worker locally with Wrangler |
+| `pnpm run preview:vinext` | Upload a version for a Cloudflare preview URL |
+| `pnpm run deploy:vinext` | Build and deploy the Worker to Cloudflare |
 | `pnpm test:e2e` | Run Playwright journeys against the production build |
 | `pnpm check` | Run linting, type checking, unit tests, validation, and the production build |
 
@@ -159,22 +166,28 @@ ignored. Do not add them to a commit.
 
 ## Deployment
 
-Vercel Git integration creates a preview for each pull request. A merge to `main` creates the
-production deployment for `www.litenova.solutions`.
+Cloudflare Workers Builds creates a preview for pull requests and deploys `main` to the production
+Worker. Git submodules must remain enabled.
 
 | Setting | Value |
 | --- | --- |
-| Vercel project | `litenova-solutions-public-site` |
+| Worker | `litenova-solutions-public-site` |
 | Root directory | Repository root |
-| Framework | Next.js |
+| Framework | Next.js with vinext |
 | Node.js | 24.x |
 | Install command | `pnpm install --frozen-lockfile` |
-| Build command | `pnpm build` |
+| Build command | `pnpm run build:vinext` |
+| Production deploy command | `pnpm run deploy:vinext` |
+| Preview deploy command | `pnpm run preview:vinext` |
 | Production branch | `main` |
 | Canonical domain | `www.litenova.solutions` |
 
-Git submodules must remain enabled. Review the Vercel preview, desktop and mobile layouts,
-standards search, crawl endpoints, and accessibility results before merging.
+Review the Cloudflare preview, desktop and mobile layouts, standards search, crawl endpoints, and
+accessibility results before merging. The apex domain redirects to the canonical `www` origin in
+Cloudflare DNS and redirect configuration.
+
+Workers Free currently allows 100,000 requests per day and 10 ms of CPU time per invocation. Review
+Worker analytics when traffic or runtime behavior changes. See the [Workers limits](https://developers.cloudflare.com/workers/platform/limits/).
 
 See the [maintainer runbook](docs/MAINTAINER.md) for content ownership, standards release updates,
 preview verification, production verification, and rollback steps.

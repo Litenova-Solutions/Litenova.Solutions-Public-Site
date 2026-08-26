@@ -20,7 +20,7 @@ We aim to acknowledge reports within 5 business days.
 This policy covers:
 
 - The Next.js application in this repository
-- Deployment configuration (`vercel.json`, GitHub Actions workflows)
+- Deployment configuration (`wrangler.jsonc`, Workers Builds settings, and GitHub Actions workflows)
 - Staging scripts and site-owned overrides
 
 Normative standards content in the [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) submodule is maintained separately. Report content issues there through that repository's channels.

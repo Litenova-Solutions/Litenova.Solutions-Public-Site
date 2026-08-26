@@ -7,6 +7,9 @@ export default defineConfig([
   ...nextTypeScript,
   globalIgnores([
     '.next/**',
+    'dist/**',
+    '.vinext/**',
+    '.wrangler/**',
     '.source/**',
     '.standards-src/**',
     'engineering-standards/**',

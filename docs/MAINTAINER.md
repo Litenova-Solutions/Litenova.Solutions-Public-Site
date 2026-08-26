@@ -93,6 +93,7 @@ Use the preferred Node.js and pnpm versions, then run:
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm run check:vinext
 pnpm check
 pnpm exec playwright install chromium
 pnpm test:e2e
@@ -104,28 +105,49 @@ company landing page, standards landing, adoption guide, privacy notice, mobile
 menu, keyboard focus, and at least one narrow viewport. Automated accessibility
 scans are a gate, not a replacement for keyboard and visual review.
 
-## Vercel deployment
+## Cloudflare Workers deployment
 
-The connected project is `litenova-solutions-public-site` in the Litenova
-Solutions Vercel team. Its repository root is the application root, its
-framework is Next.js, and its Node.js setting is 24.x. `main` is the production
-branch. Git submodules must be enabled.
+The Worker is `litenova-solutions-public-site`. Its repository root is the
+application root, its build uses vinext, and its Node.js setting is 24.x. `main`
+is the production branch. Git submodules must be enabled.
+
+Workers Builds uses `pnpm run build:vinext` for production and
+`pnpm run deploy:vinext` for deployment. Non-production branch builds use
+`pnpm run preview:vinext` to create preview URLs without promoting a version to
+production.
 
 For a branch release:
 
 1. Commit the verified worktree and push the branch.
-2. Wait for GitHub CI and the Vercel preview to finish.
+2. Wait for GitHub CI and the Cloudflare Workers preview to finish.
 3. Open the preview and repeat the critical company, standards, mobile, and
    accessibility journeys.
-4. Inspect deployment logs for content-staging, framework, or crawl-route
+4. Inspect build and Worker logs for content-staging, framework, or crawl-route
    warnings.
 5. Review the preview source for canonical URLs. Preview pages deliberately keep
    the production canonical origin.
-6. Merge only after review. Vercel then creates the production deployment.
+6. Merge only after review. Workers Builds then creates the production deployment.
 7. Verify `https://www.litenova.solutions`, `/Standards`, `/robots.txt`,
    `/sitemap.xml`, and `/opengraph-image` on the production deployment.
 8. Confirm the apex redirect and security response headers.
 
-If production verification fails, use the Vercel dashboard to restore the last
-known good production deployment and keep the failed commit available for
-diagnosis. Do not move the standards tag or mutate a released submodule commit.
+If production verification fails, restore the last known good Worker version from
+the Cloudflare dashboard or with `pnpm exec wrangler rollback`. Keep the failed
+version available for diagnosis. Do not move the standards tag or mutate a
+released submodule commit.
+
+## Cloudflare DNS and domain configuration
+
+The Cloudflare DNS zone must retain existing mail, verification, and service
+records before the registrar nameservers change. Attach
+`www.litenova.solutions` as the Worker custom domain. Configure the apex domain
+to return a permanent redirect to the `www` origin while preserving the path and
+query string.
+
+Keep the existing deployment available during DNS propagation and production
+verification. After the Cloudflare deployment is confirmed, remove the
+production domain from the old host and disable its automatic deployments.
+
+Workers Free currently provides 100,000 requests per day and 10 ms of CPU time
+per invocation. Review Worker analytics and error logs when traffic or runtime
+behavior changes. See the [Workers limits](https://developers.cloudflare.com/workers/platform/limits/).
