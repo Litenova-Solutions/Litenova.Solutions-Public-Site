@@ -33,7 +33,7 @@ export function StandardsHero() {
         </h1>
         <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
           One pinned baseline for a bounded-context ASP.NET Core, PostgreSQL,
-          and Marten application, with a Next.js or Blazor frontend.
+          and Marten application, with a React or Blazor frontend.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Button size="lg" render={<Link href="/Standards/guide/getting-started" />}>

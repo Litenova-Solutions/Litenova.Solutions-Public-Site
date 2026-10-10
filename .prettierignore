@@ -15,4 +15,5 @@ tsconfig.tsbuildinfo
 # Specification Metadata is a JSON block delimited by '---'. Prettier parses that
 # delimiter as YAML front matter and rewrites the JSON into invalid YAML.
 docs/**/*.md
+DESIGN.md
 next-env.d.ts

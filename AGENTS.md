@@ -14,10 +14,13 @@ This repository is a consumer of the Litenova Engineering Standards. `standards.
 
 ### Recorded Overrides
 
-Two provisions are recorded as overrides in `standards.project.json`, each with a decision and a review date:
+Five provisions are recorded as overrides in `standards.project.json`, each with a decision and a review date:
 
-- `FRONTEND.UI.GOVERNANCE.001`, for the Fumadocs documentation surface. See `docs/decisions/documentation-visual-system.md`.
-- `FRONTEND.UI.PAGE.001`, because the site has no domain use cases. See `docs/decisions/no-domain-use-cases.md`.
+- `standards/rule/frontend-ui.select-one-visual-authority`, for the Fumadocs documentation surface. See `docs/decisions/documentation-visual-system.md`.
+- `standards/rule/frontend-ui.restrict-css-decisions`, for inline styles in the generated social preview image. See `docs/decisions/opengraph-inline-styles.md`.
+- `standards/rule/frontend-ui.pin-the-baseline-in-the-shared-package`, because the installed primitive source stays on the Vega baseline. See `docs/decisions/vega-baseline-retained.md`.
+- `standards/rule/frontend-components.compose-composites-in-page-code`, because the shared package and the frontend share one root. See `docs/decisions/single-root-ui-package.md`.
+- `standards/rule/core-system.derive-every-scenario-from-one-reference-cast`, because the site records no behavior specifications. See `docs/decisions/no-scenario-cast.md`.
 
 `pnpm standards` runs the reference validator unmodified and waives only the exact problems those overrides cover, printing each waiver. Anything else fails. Do not widen a waiver to make a change pass; either satisfy the provision or record a new decision.
 
@@ -46,7 +49,7 @@ Write for senior software engineers, technical leaders, and Engineering Standard
 
 - Use a neutral, direct, technical documentation tone.
 - State the mechanism, capability, scope, or constraint. Prefer specific facts over broad claims.
-- Use noun-phrase headlines such as `Engineering Standards v1.15.0` and `Distributed .NET Systems`.
+- Use noun-phrase headlines such as `Engineering Standards v1.17.0` and `Distributed .NET Systems`.
 - Use title case for site-owned headings, navigation labels, buttons, card titles, metadata titles, and footer links. Use sentence case for paragraphs and descriptions.
 - Keep calls to action descriptive. Use labels such as `Read Engineering Standards` and `Source Repository` rather than promotional imperatives.
 - Name evidence for performance, quality, security, or compatibility claims. Remove a claim when the repository has no source that supports it.

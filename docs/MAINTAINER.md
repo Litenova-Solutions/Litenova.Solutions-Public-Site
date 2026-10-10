@@ -6,7 +6,7 @@ served from one Next.js application.
 ## Content ownership
 
 The `standards` submodule is the normative source. It is pinned to
-the released `v1.15.0` commit. Never change files inside the submodule from this
+the released `v1.17.0` commit. Never change files inside the submodule from this
 repository.
 
 Site-owned content lives in these locations:
@@ -51,8 +51,8 @@ Version 1 is intentionally pinned. Change it only when a new standards release
 has been accepted for publication.
 
 ```bash
-git -C standards fetch origin tag v1.15.0 --force
-git -C standards checkout --detach v1.15.0
+git -C standards fetch origin tag v1.17.0 --force
+git -C standards checkout --detach v1.17.0
 pnpm validate
 ```
 

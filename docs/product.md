@@ -33,6 +33,7 @@ The site has no backend solution, no domain modules, and no persisted state. The
 
 - [No backend solution](decisions/no-backend-solution.md)
 - [No domain use cases](decisions/no-domain-use-cases.md)
+- [No scenario cast](decisions/no-scenario-cast.md)
 - [Documentation visual system](decisions/documentation-visual-system.md)
 
 ## Verification

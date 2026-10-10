@@ -46,7 +46,7 @@ describe('site configuration', () => {
       })),
     ).toEqual([
       {
-        name: 'Entro.to',
+        name: 'Event Management System',
         category: 'Commercial Product',
         license: undefined,
       },

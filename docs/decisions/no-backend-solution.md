@@ -12,7 +12,7 @@
 
 ## Context
 
-`CORE.SCOPE.BACKEND.001` allows a consumer with no backend to omit `paths.apiSolution` and record the baseline rules that are left without a surface.
+`standards/rule/core-scope.declare-a-consumer-that-has-no-backend` allows a consumer with no backend to omit `paths.apiSolution` and record the baseline rules that are left without a surface.
 
 This repository publishes static content. Every route is prerendered and served from Cloudflare Workers static assets. There is no API, no database, no message transport, and no authenticated session.
 
@@ -20,15 +20,15 @@ This repository publishes static content. Every route is prerendered and served 
 
 The project omits `paths.apiSolution`. The backend, persistence, and API areas of the pinned standards have no surface in this repository and are not evaluated against it.
 
-Adding a backend solution to obtain conformance would contradict `CORE.PRINCIPLES.COMPLEXITY.001`, which requires the simplest structure that satisfies the requirement.
+Adding a backend solution to obtain conformance would contradict `standards/rule/core-principles.require-current-complexity-activation`, which permits added structure only for a current documented requirement.
 
 ## Baseline Rules Without A Surface
 
 | Area                                                       | Reason                                                      |
 | :--------------------------------------------------------- | :---------------------------------------------------------- |
-| `BACKEND.*`                                                | No API solution, domain layer, or application layer exists. |
-| `EXT.EFCORE`, `EXT.OUTBOX`, `EXT.JOBS`                     | No persistence, transport, or scheduler exists.             |
-| `QUALITY.SECURITY.AUTHN.001`, `QUALITY.SECURITY.AUTHZ.001` | The site serves anonymous public content only.              |
+| Backend rule pages                                       | No API solution, domain layer, or application layer exists. |
+| Extension rule pages for persistence, outbox, and jobs   | No persistence, transport, or scheduler exists.             |
+| `standards/rule/frontend-data.keep-the-session-*`, `quality-security.authorize-*` | The site holds no session and serves anonymous public content only. |
 
 The frontend, workspace, quality, and operations areas of the pinned standards apply in full.
 

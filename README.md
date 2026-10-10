@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/actions/workflows/ci.yml"><img src="https://github.com/Litenova-Solutions/Litenova.Solutions-Public-Site/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status"></a>
   <a href="https://www.litenova.solutions"><img src="https://img.shields.io/badge/site-www.litenova.solutions-f8c258?style=flat-square" alt="Live site"></a>
-  <a href="https://www.litenova.solutions/Standards"><img src="https://img.shields.io/badge/Engineering_Standards-v1.15.0-f8c258?style=flat-square" alt="Engineering Standards v1.15.0"></a>
+  <a href="https://www.litenova.solutions/Standards"><img src="https://img.shields.io/badge/Engineering_Standards-v1.17.0-f8c258?style=flat-square" alt="Engineering Standards v1.17.0"></a>
   <a href="https://developers.cloudflare.com/workers/"><img src="https://img.shields.io/badge/deployment-Cloudflare_Workers-f38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Deployed on Cloudflare Workers"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/Litenova-Solutions/Litenova.Solutions-Public-Site?style=flat-square" alt="MIT License"></a>
 </p>
@@ -58,8 +58,8 @@ flowchart LR
 
 Normative content comes from the
 [Engineering-Standards](https://github.com/Litenova-Solutions/Engineering-Standards) Git
-submodule. The submodule is pinned to the published `v1.15.0` tag at commit
-`c08817d2666f9d019cf4ee0bb2f2f8a4212533d9`. It does not follow the standards repository default
+submodule. The submodule is pinned to the published `v1.17.0` tag at commit
+`3b0e651878b91dfd6d5519e8528b320e1d6733f3`. It does not follow the standards repository default
 branch.
 
 The build copies the released documentation into `.standards-src`, applies site-owned navigation

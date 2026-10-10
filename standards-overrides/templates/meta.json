@@ -15,13 +15,19 @@
     "domain-policy",
     "end-to-end-flow",
     "workflow",
-    "page",
     "glossary",
     "decision",
     "decision-evidence",
     "ui-override-decision",
+    "design-contract",
     "operating-limits",
     "runbook",
-    "release-record"
+    "release-record",
+    "tutorial",
+    "how-to",
+    "reference",
+    "command",
+    "configuration",
+    "scenario-cast"
   ]
 }

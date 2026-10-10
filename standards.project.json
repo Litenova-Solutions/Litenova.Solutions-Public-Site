@@ -3,24 +3,29 @@
   "project": {
     "name": "litenova-solutions-public-site"
   },
-  "profile": "dotnet-nextjs",
-  "reviewedStandardsVersion": "1.15.0",
+  "profile": "dotnet-react",
+  "reviewedStandardsVersion": "1.17.0",
   "paths": {
     "domainDocs": "docs/domain",
     "uiDocs": "docs/ui",
+    "unstructuredDocs": ["docs/MAINTAINER.md"],
+    "uiPackage": {
+      "name": "@litenova-solutions/ui",
+      "path": ".",
+      "componentsJson": "components.json",
+      "primitives": "components/ui",
+      "tokens": "app/global.css",
+      "sourceLock": "ui-source-lock.json",
+      "designContract": "DESIGN.md",
+      "publicExports": ["@/components/ui"]
+    },
     "frontends": [
       {
         "name": "web",
         "path": ".",
         "platform": "react-web",
         "ui": {
-          "profile": "public-light",
-          "componentsJson": "components.json",
-          "vocabulary": "docs/ui/web/vocabulary.json",
-          "sourceLock": "ui-source-lock.json",
-          "globalCss": "app/global.css",
-          "primitives": "components/ui",
-          "publicExports": ["@/components/ui"]
+          "profile": "public-light"
         }
       }
     ]
@@ -28,14 +33,29 @@
   "selectedExtensions": [],
   "overrides": [
     {
-      "provisionId": "FRONTEND.UI.GOVERNANCE.001",
+      "provisionId": "standards/rule/frontend-ui.select-one-visual-authority",
       "decision": "docs/decisions/documentation-visual-system.md",
       "reviewBy": "2027-02-26"
     },
     {
-      "provisionId": "FRONTEND.UI.PAGE.001",
-      "decision": "docs/decisions/no-domain-use-cases.md",
-      "reviewBy": "2027-02-26"
+      "provisionId": "standards/rule/frontend-ui.restrict-css-decisions",
+      "decision": "docs/decisions/opengraph-inline-styles.md",
+      "reviewBy": "2027-04-10"
+    },
+    {
+      "provisionId": "standards/rule/frontend-ui.pin-the-baseline-in-the-shared-package",
+      "decision": "docs/decisions/vega-baseline-retained.md",
+      "reviewBy": "2027-04-10"
+    },
+    {
+      "provisionId": "standards/rule/frontend-components.compose-composites-in-page-code",
+      "decision": "docs/decisions/single-root-ui-package.md",
+      "reviewBy": "2027-04-10"
+    },
+    {
+      "provisionId": "standards/rule/core-system.derive-every-scenario-from-one-reference-cast",
+      "decision": "docs/decisions/no-scenario-cast.md",
+      "reviewBy": "2027-04-10"
     }
   ]
 }

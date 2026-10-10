@@ -21,7 +21,7 @@ export function StandardsSection() {
           title={`Engineering Standards ${standardsTag}`}
           eyebrow="Published Baseline"
         >
-          The published baseline defines workspace structure, .NET and Next.js
+          The published baseline defines workspace structure, .NET and React
           conventions, controlled UI governance, testing requirements, security
           controls, and release evidence for one bounded-context application.
         </SectionHeading>

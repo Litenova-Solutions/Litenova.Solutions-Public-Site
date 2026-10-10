@@ -137,30 +137,32 @@ export function ProductsSection() {
                   {project.description}
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-                  {project.website ? (
-                    <a
-                      href={project.website}
-                      className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Product Website
-                      <ExternalLink className="size-4" />
-                    </a>
-                  ) : null}
-                  {project.repository ? (
-                    <a
-                      href={project.repository}
-                      className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Source Repository
-                      <ExternalLink className="size-4" />
-                    </a>
-                  ) : null}
-                </div>
+                {project.website || project.repository ? (
+                  <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+                    {project.website ? (
+                      <a
+                        href={project.website}
+                        className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Product Website
+                        <ExternalLink className="size-4" />
+                      </a>
+                    ) : null}
+                    {project.repository ? (
+                      <a
+                        href={project.repository}
+                        className="inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Source Repository
+                        <ExternalLink className="size-4" />
+                      </a>
+                    ) : null}
+                  </div>
+                ) : null}
               </CardContent>
             </Card>
           ))}

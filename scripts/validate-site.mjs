@@ -49,25 +49,23 @@ const standardsTag = `v${manifestVersion}`;
 // standards bump from drifting apart.
 const npm = standardsManifest.packages.npm;
 const pinned = { ...packageJson.dependencies, ...packageJson.devDependencies };
+// The site keeps its own Next.js toolchain (next, eslint-config-next,
+// @tailwindcss/postcss, prettier, prettier-plugin-tailwindcss, clsx, and
+// tailwind-merge). The v1.17.0 profiles build on React and Vite, so the
+// manifest no longer pins those packages and they are site-managed versions.
 const manifestPinnedPackages = [
+  '@axe-core/playwright',
   '@base-ui/react',
   '@playwright/test',
-  '@tailwindcss/postcss',
   '@types/node',
   '@types/react',
   '@types/react-dom',
   'class-variance-authority',
-  'clsx',
   'eslint',
-  'eslint-config-next',
   'lucide-react',
-  'next',
-  'prettier',
-  'prettier-plugin-tailwindcss',
   'react',
   'react-dom',
   'shadcn',
-  'tailwind-merge',
   'tailwindcss',
   'tw-animate-css',
   'typescript',

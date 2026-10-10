@@ -12,7 +12,7 @@
 
 ## Context
 
-`FRONTEND.UI.PAGE.001` requires a non-trivial React web page to carry `kind: page` metadata and a sidecar contract. The `page` metadata kind requires a non-empty `useCases` list, and each entry must resolve to a use-case specification under `docs/domain/modules`.
+`FRONTEND.UI.PAGE.001` required a non-trivial React web page to carry `kind: page` metadata and a sidecar contract. The `page` metadata kind required a non-empty `useCases` list, and each entry had to resolve to a use-case specification under `docs/domain/modules`.
 
 This repository has no domain modules. Its pages present static content and accept no input. See [No backend solution](no-backend-solution.md).
 
@@ -20,11 +20,11 @@ This repository has no domain modules. Its pages present static content and acce
 
 The project records no `kind: page` specifications, and therefore no page sidecars.
 
-Creating a domain module, an aggregate, and a use case so that a static landing page could name a `useCases` entry would invent a domain model to satisfy a metadata field. `CORE.PRINCIPLES.COMPLEXITY.001` rejects that structure.
+Creating a domain module, an aggregate, and a use case so that a static landing page could name a `useCases` entry would invent a domain model to satisfy a metadata field. `standards/rule/core-principles.require-current-complexity-activation` rejects that structure.
 
 ## What Replaces The Page Contract
 
-The composition facts that a page sidecar would carry are recorded in the UI vocabulary at `docs/ui/web/vocabulary.json`, which is schema-validated on every run of the UI validator:
+The composition facts that a page sidecar would carry are recorded in the UI vocabulary at `docs/ui/web/vocabulary.json`, which the design contract at `DESIGN.md` references as the closed component inventory:
 
 - `shells` records the marketing shell and its regions.
 - `patterns` records each page region, its components, its states, and its evidence.
@@ -36,6 +36,10 @@ Focus order, landmark structure, and heading structure are asserted directly by 
 ## Consequences
 
 The vocabulary carries the composition contract. A future page that accepts input, calls a service, or renders per-user state reverses this decision, because such a page has a real use case to name.
+
+## Release Note
+
+Engineering Standards v1.17.0 removed the page provisions, the page schema, and the page templates. The route code is now the page contract. This decision stays on record as the reason the repository holds no domain model, but it is no longer recorded as an override in `standards.project.json`.
 
 ## Review
 

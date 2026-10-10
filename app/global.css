@@ -3,8 +3,8 @@
 
 /* The documentation surface is rendered by Fumadocs. Its stylesheets apply
    Tailwind utilities, so they must sit in this graph rather than in a route
-   module. Recorded as the FRONTEND.UI.GOVERNANCE.001 override in
-   standards.project.json. */
+   module. Recorded as the standards/rule/frontend-ui.restrict-css-decisions
+   override in standards.project.json. */
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 

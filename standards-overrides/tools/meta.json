@@ -1,0 +1,12 @@
+{
+  "title": "Tools",
+  "defaultOpen": false,
+  "pages": [
+    "README",
+    "validate-standards",
+    "generate-provisions",
+    "validate-consumer",
+    "validate-ui",
+    "validate-parity"
+  ]
+}

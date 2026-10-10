@@ -6,7 +6,7 @@ import { absoluteUrl, siteConfig } from '@/lib/site';
 import { standardsRepository, standardsTag, standardsVersion } from '@/lib/standards';
 
 const description =
-  'Engineering Standards v1 for one bounded-context ASP.NET Core, PostgreSQL, Marten, and optional Next.js application.';
+  'Engineering Standards v1 for one bounded-context ASP.NET Core, PostgreSQL, and Marten application with a React or Blazor frontend.';
 
 export const metadata = createPageMetadata({
   title: 'Engineering Standards v1',

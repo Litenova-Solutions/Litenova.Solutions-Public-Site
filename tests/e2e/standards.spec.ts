@@ -64,7 +64,7 @@ test('the controlled UI topic published by this release is reachable', async ({
     page.getByRole('heading', { level: 1, name: 'Controlled UI Governance' }),
   ).toBeVisible();
   await expect(
-    page.getByText('FRONTEND.UI.GOVERNANCE.001').first(),
+    page.getByText('standards/rule/frontend-ui.restrict-css-decisions').first(),
   ).toBeVisible();
 });
 
@@ -80,12 +80,12 @@ test('static standards search finds and opens a topic', async ({
 
   const dialog = page.getByRole('dialog', { name: 'Search' });
   await expect(dialog).toBeVisible();
-  await dialog.getByPlaceholder('Search').fill('marten persistence');
+  await dialog.getByPlaceholder('Search').fill('provider-neutral');
 
   const result = dialog.getByRole('option', { name: /Persistence/ }).first();
   await expect(result).toBeVisible();
   await result.click();
-  await expect(page).toHaveURL(/\/Standards\/backend\/persistence$/);
+  await expect(page).toHaveURL(/\/Standards\/backend\/persistence/);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
@@ -132,7 +132,19 @@ test('routes published under the previous taxonomy redirect permanently', async 
     { path: '/Standards/extensions', destination: '/Standards/ext' },
     {
       path: '/Standards/profile/dotnet-nextjs',
-      destination: '/Standards/profile/nextjs',
+      destination: '/Standards/profile/react',
+    },
+    {
+      path: '/Standards/profile/nextjs',
+      destination: '/Standards/profile/react',
+    },
+    {
+      path: '/Standards/ext/authjs',
+      destination: '/Standards/frontend/data',
+    },
+    {
+      path: '/Standards/templates/page',
+      destination: '/Standards/frontend/ui',
     },
   ]) {
     const response = await request.get(route.path, { maxRedirects: 0 });

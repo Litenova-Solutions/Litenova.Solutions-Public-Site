@@ -1,0 +1,16 @@
+{
+  "pages": {
+    "docs/decisions/documentation-visual-system.md": {
+      "count": 4,
+      "lastReviewed": "2026-08-26"
+    },
+    "docs/decisions/no-domain-use-cases.md": {
+      "count": 3,
+      "lastReviewed": "2026-08-26"
+    },
+    "docs/MAINTAINER.md": {
+      "count": 1,
+      "lastReviewed": "2026-10-10"
+    }
+  }
+}

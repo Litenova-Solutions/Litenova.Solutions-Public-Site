@@ -12,12 +12,11 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'entro',
-    name: 'Entro.to',
+    name: 'Event Management System',
     category: 'Commercial Product',
     status: 'In Development',
     description:
       'Event ticketing for organizers that need high throughput and low operational overhead.',
-    website: 'https://entro.to',
   },
   {
     slug: 'fuse',

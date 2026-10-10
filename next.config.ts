@@ -54,7 +54,15 @@ const marketingRedirects: Record<string, string> = {
 // directory per area and renamed 26 pages. Every route published under the
 // previous taxonomy keeps a permanent redirect to the page that now owns its
 // subject.
+//
+// Engineering Standards v1.17.0 replaced the Next.js profile page with the
+// React profile page, removed the Auth.js extension page into the frontend
+// data topic, and removed the page template. The renamed and removed routes
+// below keep permanent redirects to the pages that now own their subjects.
 const standardsRedirects: Record<string, string> = {
+  '/Standards/profile/nextjs': '/Standards/profile/react',
+  '/Standards/ext/authjs': '/Standards/frontend/data',
+  '/Standards/templates/page': '/Standards/frontend/ui',
   '/Standards/foundations/scope': '/Standards/core/scope',
   '/Standards/foundations/principles': '/Standards/core/principles',
   '/Standards/foundations/addd': '/Standards/core/system',
@@ -107,7 +115,7 @@ const standardsRedirects: Record<string, string> = {
   '/Standards/extensions/data-lifecycle': '/Standards/ext/lifecycle',
   '/Standards/extensions/deployment-containers': '/Standards/ext/containers',
   '/Standards/extensions/external-integrations': '/Standards/ext/integrations',
-  '/Standards/extensions/frontend-authjs': '/Standards/ext/authjs',
+  '/Standards/extensions/frontend-authjs': '/Standards/frontend/data',
   '/Standards/extensions/localization': '/Standards/ext/locale',
   '/Standards/extensions/multitenancy': '/Standards/ext/tenancy',
   '/Standards/extensions/outbox-worker': '/Standards/ext/outbox',
@@ -120,7 +128,7 @@ const standardsRedirects: Record<string, string> = {
   '/Standards/guides/onboarding': '/Standards/guide/getting-started',
   '/Standards/guides/model-domain': '/Standards/guide/model-domain',
   '/Standards/guides/v1-release-scope': '/Standards/core/scope',
-  '/Standards/profile/dotnet-nextjs': '/Standards/profile/nextjs',
+  '/Standards/profile/dotnet-nextjs': '/Standards/profile/react',
   '/Standards/profile/dotnet-blazor': '/Standards/profile/blazor',
   '/Standards/glossary': '/Standards/reference/glossary',
   '/Standards/decisions': '/Standards/reference/glossary',

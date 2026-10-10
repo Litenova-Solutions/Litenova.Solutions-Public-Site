@@ -4,7 +4,6 @@
   "pages": [
     "README",
     "audit",
-    "authjs",
     "bdd",
     "cache",
     "compat",
@@ -15,6 +14,7 @@
     "jobs",
     "lifecycle",
     "locale",
+    "mcp",
     "outbox",
     "realtime",
     "report",

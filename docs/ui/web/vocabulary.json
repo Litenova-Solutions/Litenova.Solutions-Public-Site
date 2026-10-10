@@ -1,5 +1,4 @@
 {
-  "$schema": "../../../standards/schemas/ui-vocabulary.schema.json",
   "schemaVersion": 1,
   "frontend": "web",
   "profile": "public-light",
@@ -8,8 +7,6 @@
     "styling": "tailwindcss-v4",
     "base": "base-ui",
     "style": "vega",
-    "presetCode": "bIkf1RQ",
-    "presetFingerprint": "sha256:87311f8e21348d5c467843284cbf4bbb75a34d383c6ed900c0c8e5c2539eadb0",
     "cssVariables": true,
     "baseColor": "neutral",
     "theme": "neutral",

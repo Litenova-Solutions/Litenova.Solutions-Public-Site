@@ -12,11 +12,11 @@
 
 ## Context
 
-`FRONTEND.UI.GOVERNANCE.001` requires one recorded visual system per React web frontend, because a second general-purpose system makes every component choice ambiguous.
+`standards/rule/frontend-ui.select-one-visual-authority` requires one visual authority per React web frontend, because a second general-purpose system makes every component choice ambiguous.
 
 This repository renders two surfaces from one Next.js application. The company surface at `/` is composed from the pinned shadcn/ui baseline. The documentation surface at `/Standards` is rendered by Fumadocs, which supplies the documentation shell, the page tree, the table of contents, the search dialog, and the Markdown presentation.
 
-Fumadocs is not a general-purpose component catalog. It is a documentation renderer, and it is the reason this repository can publish 79 standards pages without maintaining a documentation engine.
+Fumadocs is not a general-purpose component catalog. It is a documentation renderer, and it is the reason this repository can publish 94 standards pages without maintaining a documentation engine.
 
 ## Decision
 
@@ -31,7 +31,7 @@ The boundary is enforced by construction:
 
 ## The Waived Rule
 
-`FRONTEND.UI.TAILWIND.001` limits the global CSS entry to the imports that the generated shadcn entry writes. This repository adds two:
+`standards/rule/frontend-ui.restrict-css-decisions` limits the token stylesheet to the imports that the generated shadcn entry writes. This repository adds two:
 
 ```css
 @import 'fumadocs-ui/css/neutral.css';
@@ -44,7 +44,7 @@ Both stylesheets express their rules with `@apply`, so they resolve only inside 
 
 ## Alternatives Considered
 
-Rebuilding the documentation shell on the shadcn/ui baseline would remove the second system. It would also require this repository to own a sidebar, a page tree, a table of contents, an anchor index, and a static search index. That is a documentation engine, and `CORE.PRINCIPLES.COMPLEXITY.001` rejects building one to satisfy a conformance rule.
+Rebuilding the documentation shell on the shadcn/ui baseline would remove the second system. It would also require this repository to own a sidebar, a page tree, a table of contents, an anchor index, and a static search index. That is a documentation engine, and `standards/rule/core-principles.require-current-complexity-activation` rejects building one to satisfy a conformance rule.
 
 Declaring the whole frontend as an alternate system would suspend the token, utility, and source rules on the company surface as well. That trades real enforcement for a simpler declaration.
 
